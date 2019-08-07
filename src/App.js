@@ -16,8 +16,8 @@ class App extends Component {
     
       <div className="App">
 
-        {/* render index page with user */}
-        <Route path={`/users/`} render={() => {
+        {/* render home page with a user */}
+        <Route path={`/home/`} render={() => {
           return(
             <IndexPage user={window.location.pathname} />
           )
