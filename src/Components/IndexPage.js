@@ -1,4 +1,6 @@
 import React from 'react';
+import Listing from './Listings.js'
+import Header from './Header.js'
 
 class IndexPage extends React.Component {
 
@@ -37,7 +39,8 @@ class IndexPage extends React.Component {
     render() {
         return(
             <div>
-                {console.log(this.state.user)}
+                <Header />
+                <Listing />
             </div>
         )
     }

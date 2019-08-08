@@ -31,3 +31,39 @@
     transform: rotate(360deg);
   }
 }
+
+/* ROOMMATE APP COMPONENTS */
+
+#headerComponent{
+  height:150px;
+  background-color: olivedrab;
+  padding:10px;
+  text-align:left;
+}
+
+#roomTitle{
+  color:white;
+  padding:20px;
+  font-size:45px;
+}
+
+.card {
+  /* Add shadows to create the "card" effect */
+  margin-left: auto;
+  margin-right: auto;
+  width: 450px;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+  background-color: white;
+}
+
+/* On mouse-over, add a deeper shadow */
+.card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+/* Add some padding inside the card container */
+.container {
+  padding: 2px 16px;
+  width:450px;
+}
