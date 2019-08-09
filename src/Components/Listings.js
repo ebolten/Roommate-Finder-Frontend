@@ -6,8 +6,9 @@ class Listings extends React.Component {
     render() {
         return(
             <div id='listingsComponent'>
+
                 {this.props.listings.map(l => {
-                    return <ListingCard listing={l} />
+                    return <ListingCard user={this.props.user} listing={l} />
                 })}
             </div>
         )

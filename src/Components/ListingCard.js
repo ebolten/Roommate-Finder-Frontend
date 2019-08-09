@@ -23,9 +23,10 @@ class ListingCard extends React.Component {
                             user:data[i]
                         })
                     }
-                }     
+                }
             }
         })
+
         fetch('http://localhost:3000/areas') //find area
         .then(resp => resp.json())
         .then(data => {
@@ -41,11 +42,10 @@ class ListingCard extends React.Component {
     bookmarkListing = () => {
     fetch('http://localhost:3000/bookmark_listings',{
             method:'POST',
-            headers:{'Content-Type':'application/json',
-        Accept:'application/json'},
+            headers:{'Content-Type':'application/json'},
             body:JSON.stringify({
-                user_id:this.state.user.id,
-                listing_id:this.props.listing.id
+                listing_id:this.props.listing.id,
+                user_id:this.props.user.id
             })
         })
         .then(resp => resp.json())
@@ -55,6 +55,7 @@ class ListingCard extends React.Component {
     render() {
         return(
             <div id='cardObj' className='card'>
+
                 <Image className='container' src={this.props.listing.img_url} alt='room' />
                 <h2 className='container'> Posted By: {this.state.user !== null ? this.state.user.username : 'Unknown User'} </h2>
                 <h2 className='container'> {this.props.listing.desc} </h2>

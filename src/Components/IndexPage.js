@@ -32,7 +32,7 @@ class IndexPage extends React.Component {
 
                 <h2> Suggested Rooms For You </h2>
 
-                <Listing listings={this.state.listings}/>
+                <Listing user={this.props.user} listings={this.state.listings}/>
 
             </div>
         )
