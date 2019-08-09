@@ -31,7 +31,7 @@ class IndexPage extends React.Component {
             <div>
                 <Header />
                     
-                <ProfilePageBtn user={this.props.user}/>
+                <ProfilePageBtn btn={'profile'} user={this.props.user}/>
 
                 <Listing listings={this.state.listings}/>
 

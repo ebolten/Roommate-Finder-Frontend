@@ -5,9 +5,17 @@ class ProfilePageBtn extends React.Component {
 
     //link the users profile
     linkProfile = (user) => {
-        return(
-            <Link to={`/profile/${this.props.user.username}`}> Profile </Link>
-        )
+
+        if (this.props.btn === 'profile'){
+            return(
+                <Link to={`/profile/${this.props.user.username}`}> {this.props.btn} </Link>
+            )
+        } else if (this.props.btn === 'home'){
+            return(
+                <Link to={`/home/${this.props.user.username}`}> {this.props.btn} </Link>
+            )
+        }
+
     }
 
     render(){

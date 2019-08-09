@@ -14,9 +14,8 @@ class NewListingForm extends React.Component {
         }
     }
 
+    //find the area with the area code
     findArea = (area) => {
-
-        //find the area with area code
         fetch('http://localhost:3000/areas')
         .then(resp => resp.json())
         .then(data => {
@@ -29,26 +28,25 @@ class NewListingForm extends React.Component {
         })
     }
 
+    //create a post request to create new listing
     postListing = (areaId) => {
-        //create a post request to create new listing
         fetch('http://localhost:3000/listings',{
             method:'POST',
             headers:{'Content-Type':'application/json',
         Accept:'application/json'},
             body:JSON.stringify({
-
                 img_url: this.state.img,
                 desc: this.state.desc,
                 preferences: this.state.preferences,
-                user_id: 1,
+                user_id: this.props.user.id,
                 area_id: areaId
-
             })
         })
         .then(resp => resp.json())
         .then(data => {console.log(data)})
     }
 
+    //handle the submit of the form
     handleSubmit = (event) => {
         event.preventDefault()
         const img = event.target.children[1].value
@@ -62,8 +60,7 @@ class NewListingForm extends React.Component {
             preferences:pref,
             areaCode:area
         })
-
-        this.findArea(area);    
+        this.findArea(area); //find the area based on the zip code
     }
 
   render(){
@@ -87,12 +84,6 @@ class NewListingForm extends React.Component {
                 <input type='submit'/>
 
             </form >
-
-            {/* this.state.areaCode !== null ? 
-                this.postListing( 
-                this.state.img,this.state.desc,this.state.preferences,this.state.areaCode,1 ) 
-                : 'null' */}
-
           </div>
       )
   }

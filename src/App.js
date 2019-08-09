@@ -33,7 +33,7 @@ class App extends Component {
 
   //get users data based on the route
   componentDidMount(){
-    if(this.parseUser() !== null) {
+    if(this.parseUser() !== null && this.parseUser() != undefined) {
         fetch(`http://localhost:3000/users/${this.parseUser()}`)
         .then(resp => resp.json())
         .then(data => {
