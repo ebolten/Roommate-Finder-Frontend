@@ -6,12 +6,14 @@ class ListingCard extends React.Component {
     constructor(){
         super()
         this.state={
-            user:null
+            user:null,
+            area:null
         }
     }
 
+    //find the user and area that posted the card
     componentDidMount = () => {
-        fetch('http://localhost:3000/users')
+        fetch('http://localhost:3000/users') //find user
         .then(resp => resp.json())
         .then(data => {
             if (this.props.listing.user_id !== undefined){
@@ -24,14 +26,44 @@ class ListingCard extends React.Component {
                 }     
             }
         })
+        fetch('http://localhost:3000/areas') //find area
+        .then(resp => resp.json())
+        .then(data => {
+            for (var i = 0; i < data.length; i++){
+                if (data[i].id === this.props.listing.area_id){
+                    this.setState({ area:data[i] })
+                }
+            }
+        })
+    }
+
+    //allow user to be able to bookmark a listing
+    bookmarkListing = () => {
+    fetch('http://localhost:3000/bookmark_listings',{
+            method:'POST',
+            headers:{'Content-Type':'application/json',
+        Accept:'application/json'},
+            body:JSON.stringify({
+                user_id:this.state.user.id,
+                listing_id:this.props.listing.id
+            })
+        })
+        .then(resp => resp.json())
+        .then(data => {console.log(data)})
     }
 
     render() {
         return(
-            <div className='card'>
-                <h2 className='container'> {this.props.listing.desc} </h2>
-                <Image className='container' src='https://upload.wikimedia.org/wikipedia/commons/0/07/Hotel-suite-living-room.jpg' alt='room' />
+            <div id='cardObj' className='card'>
+                <Image className='container' src={this.props.listing.img_url} alt='room' />
                 <h2 className='container'> Posted By: {this.state.user !== null ? this.state.user.username : 'Unknown User'} </h2>
+                <h2 className='container'> {this.props.listing.desc} </h2>
+
+
+                <h2> Posted in: { this.state.area !== null ? this.state.area.cityname : 'Unknown Location' } </h2>
+
+                
+                <button onClick={() => this.state.user !== null ? this.bookmarkListing() : 'null'} > button </button>
             </div>
         )
     }

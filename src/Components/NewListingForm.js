@@ -9,8 +9,6 @@ class NewListingForm extends React.Component {
             desc:null,
             preferences:null,
             areaCode:null,
-            area_id:null,
-            submit:false
         }
     }
 
@@ -30,29 +28,31 @@ class NewListingForm extends React.Component {
 
     //create a post request to create new listing
     postListing = (areaId) => {
-        fetch('http://localhost:3000/listings',{
-            method:'POST',
-            headers:{'Content-Type':'application/json',
-        Accept:'application/json'},
-            body:JSON.stringify({
-                img_url: this.state.img,
-                desc: this.state.desc,
-                preferences: this.state.preferences,
-                user_id: this.props.user.id,
-                area_id: areaId
+        if (areaId === null || areaId === undefined){
+            alert('Invalid Zip Code');
+        } else{
+            fetch('http://localhost:3000/listings',{
+                method:'POST',
+                headers:{'Content-Type':'application/json',
+            Accept:'application/json'},
+                body:JSON.stringify({
+                    img_url: this.state.img_url,
+                    desc: this.state.desc,
+                    preferences: this.state.preferences,
+                    user_id: this.props.user.id,
+                    area_id: areaId
+                })
             })
-        })
-        .then(resp => resp.json())
-        .then(data => {console.log(data)})
+            .then(resp => resp.json())
+            .then(data => {console.log(data)})}
     }
 
     //handle the submit of the form
     handleSubmit = (event) => {
-        event.preventDefault()
         const img = event.target.children[1].value
-        const desc = event.target.children[4].value
-        const pref = event.target.children[7].value
-        const area = event.target.children[10].value
+        const desc = event.target.children[5].value
+        const pref = event.target.children[9].value
+        const area = event.target.children[13].value
         
         this.setState({
             img_url:img,
@@ -66,21 +66,23 @@ class NewListingForm extends React.Component {
   render(){
       return(
           <div>
+
+          <h5> Post a New Listing </h5>
           
             <form onSubmit={ event => this.handleSubmit(event) } >
             
                 <label> Image URL: </label>
-                <input type='text'  />
-                <br />
+                <textarea type='text'  />
+                <br /><br />
                 <label> Description: </label>
-                <input type='text'  />
-                <br />
+                <textarea type='text'  />
+                <br /><br />
                 <label> Your Preferences: </label>
-                <input type='text'  />
-                <br />
+                <textarea type='text'  />
+                <br /><br />
                 <label> Area Code </label>
                 <input type='text'  />
-
+                <br />
                 <input type='submit'/>
 
             </form >

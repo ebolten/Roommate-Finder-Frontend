@@ -2,21 +2,43 @@ import React from 'react'
 import Header from './Header.js'
 import Listing from './Listings.js'
 import NewListingForm from './NewListingForm.js'
-import ProfilePageBtn from './ProfilePageBtn.js'
 
 class ProfilePage extends React.Component {
+
+    constructor(){
+        super()
+        this.state={
+            createListing:false
+        }
+    }
+
+    updateListing = () => {
+        if (this.state.createListing){
+            return( <NewListingForm user={this.props.user}/> )
+        } else {
+            //render nothing
+        }
+    }
+
     render(){
         return(
             <div>
-                <Header />
+
+                <Header user={this.props.user} createListing={ this.updateListing } btn={'home'} />
                 <h2> {this.props.user !== null ? this.props.user.username : 'Failed to Load User'} </h2>
                 <h3> {this.props.user !== null ? this.props.user.desc : 'Failed to Load User'} </h3>
 
-                <h6> Create a New Listing </h6>
+                {/*
+                    this.state.createListing !== false ? <NewListingForm user={this.props.user}/> : ''
+                */}
+
+
                 <NewListingForm user={this.props.user}/>
 
-                <ProfilePageBtn user={this.props.user} btn={'home'} />
-
+                {/*<button 
+                onClick={() => {this.state.createListing === false ? this.setState({ createListing:true }) : this.setState({ createListing:false })}} >
+                    Create a Listing?
+                </button>*/}
 
             </div>
         )

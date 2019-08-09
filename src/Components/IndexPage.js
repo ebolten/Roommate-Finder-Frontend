@@ -1,7 +1,6 @@
 import React from 'react';
 import Listing from './Listings.js'
 import Header from './Header.js'
-import ProfilePageBtn from './ProfilePageBtn.js'
 
 class IndexPage extends React.Component {
 
@@ -28,10 +27,10 @@ class IndexPage extends React.Component {
 
     render() {
         return(
-            <div>
-                <Header />
-                    
-                <ProfilePageBtn btn={'profile'} user={this.props.user}/>
+            <div id='indexDiv'>
+                <Header user={this.props.user} btn={'home'} />
+
+                <h2> Suggested Rooms For You </h2>
 
                 <Listing listings={this.state.listings}/>
 
