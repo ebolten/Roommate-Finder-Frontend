@@ -68,11 +68,11 @@
   /* Add shadows to create the "card" effect */
   margin-left: left;
   margin-right: auto;
-  width: 450px;
+  width: 520px;
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
   transition: 0.3s;
   background-color: white;
-  padding:50px;
+  padding: 40px;
 }
 
 /* On mouse-over, add a deeper shadow */
@@ -117,4 +117,52 @@ li:hover {
 
 #isSelected {
   background-color: #111;
+}
+
+*, *:before, *:after{ 
+  box-sizing: border-box; 
+  -moz-box-sizing: border-box; 
+  -webkit-box-sizing: border-box; 
+} 
+.bookmark{ 
+  position: relative; 
+  height: 30px; 
+  width: 10px; 
+  padding: 0px; 
+  border-left: 5px solid red; 
+  border-right: 5px solid red; 
+  border-bottom: 5px solid transparent; 
+}
+
+/* big card for listing container */
+
+.cardListing {
+  /* Add shadows to create the "card" effect */
+  margin:50px;
+  margin-left: left;
+  margin-right: auto;
+  width: 1300px;
+  height: 500px;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+  background-color: white;
+  padding: 40px;
+}
+
+/* On mouse-over, add a deeper shadow */
+.card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+/* Add some padding inside the card container */
+.containerImage {
+  padding: 2px 16px;
+  width:600px;
+  float:left;
+}
+
+.containerText {
+  padding: 2px 16px;
+  width:450px;
+  float:right;
 }

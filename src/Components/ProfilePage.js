@@ -10,7 +10,9 @@ class ProfilePage extends React.Component {
         this.state={
             createListing:false,
             bookmarks:[],
-            user:null
+            user:null,
+            listings:[],
+            btnText:'Post a Listing?'
         }
     }
 
@@ -22,6 +24,7 @@ class ProfilePage extends React.Component {
 
     //render the listing form
     updateListing = () => {
+        this.setState({ btnText:'Close Form' })
         if (this.state.createListing){
             return( <NewListingForm user={this.props.user}/> )
         } else {
@@ -35,11 +38,14 @@ class ProfilePage extends React.Component {
             fetch('http://localhost:3000/bookmark_listings')
             .then(resp => resp.json())
             .then(data => {
-
                 for(var i = 0; i < data.length; i++){
-                    if(data[i].user_id === this.props.id){
-                        this.setState({
-                            bookmarks:[ ...this.state.bookmarks,data[i] ]
+                    if(data[i].user_id === this.props.id){ //render listing objects
+                        fetch(`http://localhost:3000/listings/${data[i].listing_id}`)
+                        .then(resp => resp.json())
+                        .then(listData => {
+                            this.setState({
+                             bookmarks:[ ...this.state.bookmarks,listData ]
+                            })
                         })
                     }
                 }
@@ -55,20 +61,20 @@ class ProfilePage extends React.Component {
                 <h2> {this.props.user !== null ? this.props.user.username : 'Failed to Load User'} </h2>
                 <h3> {this.props.user !== null ? this.props.user.desc : 'Failed to Load User'} </h3>
 
-                {/*
+                {
                     this.state.createListing !== false ? <NewListingForm user={this.props.user}/> : ''
-                */}
+                }
 
-                <NewListingForm user={this.props.user}/>
+                {/* <NewListingForm user={this.props.user}/> */}
 
-                {/*<button 
+                {<button id='formBtn'
                 onClick={() => {this.state.createListing === false ? this.setState({ createListing:true }) : this.setState({ createListing:false })}} >
-                    Create a Listing?
-                </button>*/}
+                    {this.state.btnText}
+                </button>}
 
                 <h2> My Bookmarks: </h2>
                 { this.props.id !== null ? this.fetchBookmarks() : 'Failed to Load Bookmarks' }
-                {console.log(this.state.bookmarks)}
+                <Listing listings={ this.state.bookmarks }/>
 
             </div>
         )

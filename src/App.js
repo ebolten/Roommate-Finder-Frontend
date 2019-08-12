@@ -8,6 +8,7 @@ import ListingContainer from './Components/ListingContainer.js'
 import IndexPage from './Components/IndexPage.js'
 import ProfilePage from './Components/ProfilePage';
 import NewListingForm from './Components/NewListingForm';
+import Login from './Components/Login';
 
 class App extends Component {
 
@@ -15,13 +16,17 @@ class App extends Component {
     super()
     this.state={
       user:null,
-      user_id:null
+      user_id:null,
+      listing:null
     }
   }
 
   //parse window.location.pathname to get the username only
   parseUser() {
     let user = window.location.pathname;
+
+    console.log(user)
+
     let NewUser = user.split('/')
 
     if(NewUser[2] === undefined) {
@@ -30,6 +35,8 @@ class App extends Component {
         return NewUser[2];
     }
   }
+
+  
 
   //get users data based on the route
   componentDidMount(){
@@ -45,6 +52,7 @@ class App extends Component {
     }
   }
 
+
   render() {
     return (
     
@@ -58,7 +66,7 @@ class App extends Component {
         }} />
 
         {/* render profile page with a user */}
-        <Route path={`/profile/`} render={() => {
+        <Route path={`/profile/:username`} render={() => {
           return(
             <ProfilePage id={this.state.user_id} user={this.state.user} />
           )
@@ -68,6 +76,18 @@ class App extends Component {
         <Route path={`/newlisting/`} render={() => {
           return(
             <NewListingForm id={this.state.user_id} user={this.state.user} />
+          )
+        }} />
+
+        <Route exact path={'/login'} render={() => {
+          return(
+            <Login />
+          )
+        }} />
+
+        <Route path={'/listing/'} render={() => {
+          return(
+            <ListingContainer listing={this.state.listing} />
           )
         }} />
 

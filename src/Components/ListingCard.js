@@ -38,6 +38,8 @@ class ListingCard extends React.Component {
         })
     }
 
+    
+
     //allow user to be able to bookmark a listing
     bookmarkListing = () => {
     fetch('http://localhost:3000/bookmark_listings',{
@@ -58,13 +60,26 @@ class ListingCard extends React.Component {
 
                 <Image className='container' src={this.props.listing.img_url} alt='room' />
                 <h2 className='container'> Posted By: {this.state.user !== null ? this.state.user.username : 'Unknown User'} </h2>
-                <h2 className='container'> {this.props.listing.desc} </h2>
+                <h4 className='container'> {this.props.listing.desc} </h4>
+
 
 
                 <h2> Posted in: { this.state.area !== null ? this.state.area.cityname : 'Unknown Location' } </h2>
 
                 
-                <button onClick={() => this.state.user !== null ? this.bookmarkListing() : 'null'} > button </button>
+                <button onClick={() => this.state.user !== null ? this.bookmarkListing() : 'null'} > Bookmark This Listing </button>
+                <br />
+
+                {/* to do next:
+                *1. create functionality to bookmark:
+                    *1. make GET request to bookmark_listings
+                    *2. conditional for if user bookmarked this
+                    *3. if yes, highlight bookmark, if no, don't
+                */}
+
+
+                <button onClick={() => { this.props.setListing(this.props.listing)}} > More Info </button>
+                <div class="bookmark"></div>
             </div>
         )
     }

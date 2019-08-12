@@ -9,6 +9,7 @@ class NewListingForm extends React.Component {
             desc:null,
             preferences:null,
             areaCode:null,
+            price:null
         }
     }
 
@@ -28,6 +29,10 @@ class NewListingForm extends React.Component {
 
     //create a post request to create new listing
     postListing = (areaId) => {
+
+
+        console.log(this.state.price);
+
         if (areaId === null || areaId === undefined){
             alert('Invalid Zip Code');
         } else{
@@ -40,7 +45,8 @@ class NewListingForm extends React.Component {
                     desc: this.state.desc,
                     preferences: this.state.preferences,
                     user_id: this.props.user.id,
-                    area_id: areaId
+                    area_id: areaId,
+                    price:this.state.price
                 })
             })
             .then(resp => resp.json())
@@ -49,16 +55,21 @@ class NewListingForm extends React.Component {
 
     //handle the submit of the form
     handleSubmit = (event) => {
+        event.preventDefault();
         const img = event.target.children[1].value
         const desc = event.target.children[5].value
         const pref = event.target.children[9].value
         const area = event.target.children[13].value
+        const newPrice = event.target.children[17].value
+
+        console.log(newPrice)
         
         this.setState({
             img_url:img,
             desc:desc,
             preferences:pref,
-            areaCode:area
+            areaCode:area,
+            price:newPrice
         })
         this.findArea(area); //find the area based on the zip code
     }
@@ -80,12 +91,15 @@ class NewListingForm extends React.Component {
                 <label> Your Preferences: </label>
                 <textarea type='text'  />
                 <br /><br />
-                <label> Area Code </label>
+                <label> Area Code: </label>
                 <input type='text'  />
-                <br />
+                <br /><br />
+                <label> Price per Month: </label>
+                <input type='text' />
                 <input type='submit'/>
 
             </form >
+            <br />
           </div>
       )
   }
