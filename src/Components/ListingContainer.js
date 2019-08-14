@@ -10,9 +10,8 @@ class ListingContainer extends React.Component {
             area:null
         }
     }
-
+    //get the date as a string
     getDate = () => {
-
         let date = this.props.listing.created_at.split('-')
         let month = date[1]
         let day = date[2].split('T')[0]
@@ -58,7 +57,7 @@ class ListingContainer extends React.Component {
         }
         return `${month} ${day}, ${year}`;
     }
-
+    //find which user posted bookmark
     componentDidMount = () => {
         fetch('http://localhost:3000/users') //find user
         .then(resp => resp.json())
@@ -73,8 +72,8 @@ class ListingContainer extends React.Component {
                 }
             }
         })
-
-        fetch('http://localhost:3000/areas') //find area
+        //find area of the bookmark
+        fetch('http://localhost:3000/areas')
         .then(resp => resp.json())
         .then(data => {
             for (var i = 0; i < data.length; i++){
@@ -84,10 +83,9 @@ class ListingContainer extends React.Component {
             }
         })
     }
-
+    //send a message to another user about their bookmark
     sendMessage = (event) => {
         event.preventDefault();
-
         fetch('http://localhost:3000/messages',{
             method:'POST',
             headers:{ 'Content-Type':'application/json' },
@@ -109,10 +107,9 @@ class ListingContainer extends React.Component {
             
                 <div className='cardListing'>
 
-                
-                
                    <Image className='containerImage' src={this.props.listing.img_url} /> 
 
+                   <h3 className='containerText'> Price per Month: { this.props.listing.price !== null ? `$${this.props.listing.price}` : 'Message User for Price'} </h3>
                    <h3 className='containerText'>Posted By: {this.state.user !== null ? this.state.user.username : 'Unknown User'} </h3>
                    <h3 className='containerText'> Posted In: {this.state.area !== null ? `${this.state.area.cityname}, ${this.state.area.zipcode}` : 'Unknown Area'} </h3>
                    <h3 className='containerText'> Room Description: {this.props.listing.desc} </h3>
@@ -127,8 +124,6 @@ class ListingContainer extends React.Component {
                     </form>
                 
                    <h5 className='container'> Posted On: {this.getDate()} </h5>
-
-                    
 
                     <button onClick={() => { this.props.setListing(null) }}> Back to All Listings </button>
 

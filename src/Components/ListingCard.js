@@ -7,8 +7,22 @@ class ListingCard extends React.Component {
         super()
         this.state={
             user:null,
-            area:null
+            area:null,
+            isBookmarked:false,
+            bookmarkText:'Bookmark this Listing'
         }
+    }
+    //get whether this listing is bookmarked by logged in user
+    getBookmark = () => {
+        fetch('http://localhost:3000/bookmark_listings')
+        .then(resp => resp.json())
+        .then(data => {
+            for (var i = 0; i < data.length; i++) {
+                if ((data[i].user_id === this.props.user.id) && data[i].listing_id === this.props.listing.id) {
+                    this.setState({ isBookmarked:true, bookmarkText:'Delete Bookmark' })
+                }
+            }            
+        })
     }
 
     //find the user and area that posted the card
@@ -26,8 +40,8 @@ class ListingCard extends React.Component {
                 }
             }
         })
-
-        fetch('http://localhost:3000/areas') //find area
+        //find the area of this listing
+        fetch('http://localhost:3000/areas')
         .then(resp => resp.json())
         .then(data => {
             for (var i = 0; i < data.length; i++){
@@ -37,7 +51,6 @@ class ListingCard extends React.Component {
             }
         })
     }
-
     //allow user to be able to bookmark a listing
     bookmarkListing = () => {
     fetch('http://localhost:3000/bookmark_listings',{
@@ -51,6 +64,10 @@ class ListingCard extends React.Component {
         .then(resp => resp.json())
         .then(data => {console.log(data)})
     }
+    //allow a user to be able to delete an existing bookmark
+    unbookmarkListing = () => {
+        //some code will go here eventually
+    }
 
     render() {
         return(
@@ -62,18 +79,13 @@ class ListingCard extends React.Component {
 
                 <h2> Posted in: { this.state.area !== null ? this.state.area.cityname : 'Unknown Location' } </h2>
 
-                <button onClick={() => this.state.user !== null ? this.bookmarkListing() : 'null'} > Bookmark This Listing </button>
+                <button onClick={() => this.state.user !== null ? this.bookmarkListing() : 'null'} > {this.state.bookmarkText} </button>
                 <br />
 
-                {/* to do next:
-                *1. create functionality to bookmark:
-                    *1. make GET request to bookmark_listings
-                    *2. conditional for if user bookmarked this
-                    *3. if yes, highlight bookmark, if no, don't
-                */}
+                { this.props.user !== null && this.props.listing && this.state.isBookmarked === false !== null ? this.getBookmark() : ''}
+                { this.state.isBookmarked !== false ? <div class="bookmark"></div> : <div class="bookmarkEmpty"></div> }
 
                 <button onClick={() => { this.props.setListing(this.props.listing)}} > More Info </button>
-                <div class="bookmark"></div>
             </div>
         )
     }

@@ -129,7 +129,7 @@ class Login extends React.Component {
                             <input type='text' />
                             <br /><br />
                             <label> Password (5 words) </label>
-                            <input type='text' />
+                            <input type='password' />
                             <br /><br />
                             <label> Image URL (profile photo) </label>
                             <input type='text' />

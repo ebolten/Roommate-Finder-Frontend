@@ -59,9 +59,7 @@ class NewListingForm extends React.Component {
         const pref = event.target.children[9].value
         const area = event.target.children[13].value
         const newPrice = event.target.children[17].value
-
-        console.log(newPrice)
-        
+                
         this.setState({
             img_url:img,
             desc:desc,

@@ -134,6 +134,16 @@ li:hover {
   border-bottom: 5px solid transparent; 
 }
 
+.bookmarkEmpty{ 
+  position: relative; 
+  height: 30px; 
+  width: 10px; 
+  padding: 0px; 
+  border-left: 5px solid black; 
+  border-right: 5px solid black; 
+  border-bottom: 5px solid transparent; 
+}
+
 /* big card for listing container */
 
 .cardListing {
