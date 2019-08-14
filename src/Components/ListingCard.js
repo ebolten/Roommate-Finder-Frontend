@@ -38,8 +38,6 @@ class ListingCard extends React.Component {
         })
     }
 
-    
-
     //allow user to be able to bookmark a listing
     bookmarkListing = () => {
     fetch('http://localhost:3000/bookmark_listings',{

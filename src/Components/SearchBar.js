@@ -4,10 +4,8 @@ class SearchBar extends React.Component {
 
     render(){
         return(
-            <div>
-            
+            <div> 
                 <input onChange={(event) => { this.props.change(event) }} type='text' />
-            
             </div>
         )
     }

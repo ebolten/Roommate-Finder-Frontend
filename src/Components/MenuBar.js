@@ -19,6 +19,13 @@ class MenuBar extends React.Component {
             )
     }
 
+    //send user to login screen
+    handleLogin = () => {
+        return(
+            <Link to={`/login`}> Logout </Link>
+        )
+    }
+
     render(){
         return(
             <div id='menubar'>
@@ -26,6 +33,7 @@ class MenuBar extends React.Component {
             <ul>
                 <li> {this.props.user !== null ? this.handleHome() : 'Could not Load'} </li>
                 <li> {this.props.user !== null ? this.handleProfile() : 'Could not Load'} </li>
+                <li> {this.props.user !== null ? this.handleLogin() : 'Could not Load'} </li>
             </ul>
             
             </div>

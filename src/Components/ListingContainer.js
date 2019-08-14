@@ -85,31 +85,55 @@ class ListingContainer extends React.Component {
         })
     }
 
+    sendMessage = (event) => {
+        event.preventDefault();
+
+        fetch('http://localhost:3000/messages',{
+            method:'POST',
+            headers:{ 'Content-Type':'application/json' },
+            body:JSON.stringify({
+                listing_id: this.props.listing.id,
+                user_id: this.state.user.id,
+                content:event.target.children[1].value
+            })
+        })
+        .then(resp => resp.json())
+        .then(data => {
+            console.log(data)
+        })    
+    }
+
     render() {
         return(
             <div>
             
                 <div className='cardListing'>
+
+                
                 
                    <Image className='containerImage' src={this.props.listing.img_url} /> 
 
                    <h3 className='containerText'>Posted By: {this.state.user !== null ? this.state.user.username : 'Unknown User'} </h3>
                    <h3 className='containerText'> Posted In: {this.state.area !== null ? `${this.state.area.cityname}, ${this.state.area.zipcode}` : 'Unknown Area'} </h3>
                    <h3 className='containerText'> Room Description: {this.props.listing.desc} </h3>
+
+                   <form className='containerText' onSubmit={(event) => { this.sendMessage(event) }}>
+                    
+                        <label> Enter Message Here: </label>
+                        <textarea type='text' />
+
+                        <input type='submit'/>
+                    
+                    </form>
                 
                    <h5 className='container'> Posted On: {this.getDate()} </h5>
 
+                    
 
                     <button onClick={() => { this.props.setListing(null) }}> Back to All Listings </button>
 
                 </div>
 
-
-                <form>
-                
-                    {/* this form is for sending a message */}
-                
-                </form>
             
             </div>
         )

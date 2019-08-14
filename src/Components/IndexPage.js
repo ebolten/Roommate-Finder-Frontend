@@ -10,30 +10,33 @@ class IndexPage extends React.Component {
         super()
         this.state={
             listings:[],
+            validListings:[],
             user:null,
             areas:[],
-            singleListing:null
+            singleListing:null,
         }
-    }
-
-    //finding an area given its id
-    findAreas = () => {
-
-        fetch(`http://localhost:3000/areas`)
-        .then(resp => resp.json())
-        .then(data => {
-            this.setState({ areas:[ ...this.state.areas,data] })
-        })
     }
 
     //searching the listings by cityname
     changeSearch = (event) => {
+        let searchWord = event.currentTarget.value
+        let validlistings = []
 
-        console.log(this.state.areas)
-
-
-
-
+        for (var i = 0; i < this.state.listings.length; i++){
+            for (var j = 0; j < this.state.areas.length; j++) {
+                if (this.state.listings[i].area_id === this.state.areas[j].id) {
+                    if (this.state.areas[j].cityname.includes(searchWord)){
+                        validlistings.push(this.state.listings[i])
+                        this.setState({ validListings:validlistings })
+                    }
+                }
+            }
+        }
+        //if word is empty, valid listings is empty
+        if (searchWord.length === 0){
+            this.setState({ validListings:[] })
+            
+        }
     }
 
     //getting the listings
@@ -43,10 +46,15 @@ class IndexPage extends React.Component {
         .then(resp => resp.json())
         .then(data => {
             this.setState({
-                listings:data
+                listings:data,
+                listingsTwo:data
             })
         })
-        this.findAreas()
+        fetch(`http://localhost:3000/areas`)
+        .then(resp => resp.json())
+        .then(data => {
+            this.setState({ areas:data })
+        })
     }
 
     setListing = (listing) => {
@@ -63,9 +71,11 @@ class IndexPage extends React.Component {
                 <h4> Search Rooms by City: </h4>
                 <SearchBar change={this.changeSearch} />
 
-                <br />
+                <h2> Suggested Rooms: </h2>
 
-                <h2> Suggested Rooms For You </h2>
+                { this.state.validListings !== [] ? 
+                    <Listing user={this.props.user} setListing={this.setListing} listings={this.state.validListings}/> : 
+                    '' }
 
                 { this.state.singleListing !== null ? <ListingContainer setListing={this.setListing} listing={this.state.singleListing} />
 

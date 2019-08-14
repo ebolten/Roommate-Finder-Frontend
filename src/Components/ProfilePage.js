@@ -12,7 +12,8 @@ class ProfilePage extends React.Component {
             bookmarks:[],
             user:null,
             listings:[],
-            btnText:'Post a Listing?'
+            btnText:'Post a Listing',
+            messages:[]
         }
     }
 
@@ -20,6 +21,9 @@ class ProfilePage extends React.Component {
         this.setState({
             user:this.props.user
         })
+    }
+    //fetch the user's messages
+    fetchMessages = (userID,listings) => {
     }
 
     //render the listing form
@@ -76,6 +80,9 @@ class ProfilePage extends React.Component {
                 { this.props.id !== null ? this.fetchBookmarks() : 'Failed to Load Bookmarks' }
                 <Listing listings={ this.state.bookmarks }/>
 
+                <h2> My Messages: </h2>
+                {/* messages will go here */}
+                
             </div>
         )
     }

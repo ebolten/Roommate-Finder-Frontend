@@ -28,7 +28,7 @@ class Login extends React.Component {
         return(
             <div>
 
-                <h1>Login:</h1>
+                <h2>Login:</h2>
                 
                 <form onSubmit={ (event) => { this.handleSubmit( event.target.children[1].value ) } } >
                     <label> Username: </label>
@@ -45,9 +45,10 @@ class Login extends React.Component {
 
                 </form>
 
-                <h2> Or </h2>
+                <h1> Or </h1>
 
-                <h1> Create a New Account Here: </h1>
+                <h2> Create a New Account </h2>
+                <button> Here: </button>
 
             </div>
         )
