@@ -29,8 +29,6 @@ class NewListingForm extends React.Component {
 
     //create a post request to create new listing
     postListing = (areaId) => {
-
-
         console.log(this.state.price);
 
         if (areaId === null || areaId === undefined){

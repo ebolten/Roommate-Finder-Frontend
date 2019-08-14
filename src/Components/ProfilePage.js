@@ -2,6 +2,7 @@ import React from 'react'
 import Header from './Header.js'
 import Listing from './Listings.js'
 import NewListingForm from './NewListingForm.js'
+import ListingContainer from './ListingContainer.js'
 
 class ProfilePage extends React.Component {
 
@@ -13,7 +14,8 @@ class ProfilePage extends React.Component {
             user:null,
             listings:[],
             btnText:'Post a Listing',
-            messages:[]
+            messages:[],
+            singleListing:null
         }
     }
 
@@ -35,7 +37,12 @@ class ProfilePage extends React.Component {
             //render nothing
         }
     }
-
+    //set the listing to be shown
+    setListing = (listing) => {
+        this.setState({
+            singleListing:listing
+        })
+    }
     //render the user's bookmarked rooms
     fetchBookmarks = () => {
         if (this.state.bookmarks.length === 0){
@@ -78,9 +85,11 @@ class ProfilePage extends React.Component {
 
                 <h2> My Bookmarks: </h2>
                 { this.props.id !== null ? this.fetchBookmarks() : 'Failed to Load Bookmarks' }
-                <Listing listings={ this.state.bookmarks }/>
+                {/* using callback to render single listing if necessary */}
+                { this.state.singleListing !== null ? <ListingContainer setListing={this.setListing} listing={this.state.singleListing} />
+                  : <Listing user={this.props.user} setListing={this.setListing} listings={this.state.bookmarks}/>
+                }
 
-                <h2> My Messages: </h2>
                 {/* messages will go here */}
                 
             </div>

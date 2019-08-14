@@ -38,7 +38,6 @@ class IndexPage extends React.Component {
             
         }
     }
-
     //getting the listings
     componentDidMount(){
         this.setState({user:this.props.user})
@@ -56,7 +55,7 @@ class IndexPage extends React.Component {
             this.setState({ areas:data })
         })
     }
-
+    //set the listing to be shown
     setListing = (listing) => {
         this.setState({
             singleListing:listing
@@ -73,14 +72,14 @@ class IndexPage extends React.Component {
 
                 <h2> Suggested Rooms: </h2>
 
+                {/* if there are validListings (searched), render those */}
                 { this.state.validListings !== [] ? 
                     <Listing user={this.props.user} setListing={this.setListing} listings={this.state.validListings}/> : 
-                    '' }
-
+                    ''}
+                
+                {/* if there is a single listing, render the listing container */ }
                 { this.state.singleListing !== null ? <ListingContainer setListing={this.setListing} listing={this.state.singleListing} />
-
                   : <Listing user={this.props.user} setListing={this.setListing} listings={this.state.listings}/>
-
                 }
 
             </div>

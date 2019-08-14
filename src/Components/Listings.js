@@ -8,6 +8,15 @@ class Listings extends React.Component {
         this.state={ uniqListing:[] }
     }
 
+    // countList = (data) => {
+
+    //     data.reduce(function(p, c){
+    //         p[c.name] = (p[c.name] || 0) + 1;
+    //         return p;
+
+    // }, {});
+
+    //remove duplicate elements in an array of objects
     removeDuplicates = (array) => {
         return array.filter((item,index) => array.indexOf(item) === index)
     }

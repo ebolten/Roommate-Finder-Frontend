@@ -6,7 +6,7 @@ class MenuBar extends React.Component {
 
     //send user to home page
     handleHome = () => {
-        if (this.props.user !== null) {
+        if (this.props.user !== null && this.props.user !== undefined) {
             return (
                 <Link to={`/home/${this.props.user.username}`}> Home </Link>
             )}       

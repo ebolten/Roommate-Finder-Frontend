@@ -60,11 +60,8 @@ class ListingCard extends React.Component {
                 <h2 className='container'> Posted By: {this.state.user !== null ? this.state.user.username : 'Unknown User'} </h2>
                 <h4 className='container'> {this.props.listing.desc} </h4>
 
-
-
                 <h2> Posted in: { this.state.area !== null ? this.state.area.cityname : 'Unknown Location' } </h2>
 
-                
                 <button onClick={() => this.state.user !== null ? this.bookmarkListing() : 'null'} > Bookmark This Listing </button>
                 <br />
 
@@ -74,7 +71,6 @@ class ListingCard extends React.Component {
                     *2. conditional for if user bookmarked this
                     *3. if yes, highlight bookmark, if no, don't
                 */}
-
 
                 <button onClick={() => { this.props.setListing(this.props.listing)}} > More Info </button>
                 <div class="bookmark"></div>

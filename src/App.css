@@ -166,3 +166,13 @@ li:hover {
   width:450px;
   float:right;
 }
+
+#loginPage{
+  height:700px;
+  background-color: white;
+}
+
+#loginText{
+  font-weight: bold;
+  margin:50px;
+}
