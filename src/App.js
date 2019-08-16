@@ -9,6 +9,7 @@ import IndexPage from './Components/IndexPage.js'
 import ProfilePage from './Components/ProfilePage';
 import NewListingForm from './Components/NewListingForm';
 import Login from './Components/Login';
+import MyListings from './Components/MyListings';
 
 class App extends Component {
 
@@ -36,8 +37,6 @@ class App extends Component {
     }
   }
 
-  
-
   //get users data based on the route
   componentDidMount(){
     if(this.parseUser() !== null && this.parseUser() != undefined) {
@@ -52,7 +51,6 @@ class App extends Component {
     }
   }
 
-
   render() {
     return (
     
@@ -62,6 +60,13 @@ class App extends Component {
         <Route path={`/home/`} render={() => {
           return(
             <IndexPage id={this.state.user_id} user={this.state.user} />
+          )
+        }} />
+
+        {/* render the user's listings */}
+        <Route path={`/mylistings/`} render={() => {
+          return(
+            <MyListings id={this.state.user_id} user={this.state.user} />
           )
         }} />
 

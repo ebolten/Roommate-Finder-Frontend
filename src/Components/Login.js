@@ -68,11 +68,10 @@ class Login extends React.Component {
         .then(resp => resp.json())
         .then(data => {
             console.log(data)
+            this.setState({ user:data })
         })
-
     }
-
-    //update the state for user attributes
+    //update the state for user attributes on create
     onSubmit = (event) => {
         event.preventDefault()
         let username = event.target.children[2].value
@@ -93,6 +92,12 @@ class Login extends React.Component {
         })
         this.findArea(userArea)
     }
+    //create a pop up that says failed to login
+    popUp = (event,type) => {
+        event.preventDefault()
+        if (type === 'login') { window.alert('Failed to Login: Username or Password is Invalid') }
+        else if (type === 'create') { window.alert('Failed to Create Account') }
+    }
 
     render(){
         return(
@@ -108,47 +113,46 @@ class Login extends React.Component {
                         <label> Password </label>
                         <input type='password'/>
 
+                        {/* creates a button for login */}
                         { this.state.user !== null ? <Link to={`/profile/${this.state.user.username}`} >
-
                             <input value='Login' type='submit'/>
-
-                        </Link> : 'Login'}
-
+                        </Link> : <button onClick={(event) => this.popUp(event,'login') }> Login </button>}
 
                     </form>
 
-                    <h1> Or </h1>
+                    <h2> Or Create a New Account -> <button onClick={() => this.toggleCreateAcc()} >Here</button></h2>
 
-                    <h2> Create a New Account </h2>
-                    <button onClick={() => this.toggleCreateAcc()} > Here: </button>
-
+                    {/* if user wants to create an account, create a pop-up card */}
                     { this.state.createAcc !== false ? 
-                        <form onSubmit={(e) => this.onSubmit(e)}>
-                            <br />
-                            <label> Username: </label>
-                            <input type='text' />
-                            <br /><br />
-                            <label> Password (5 words) </label>
-                            <input type='password' />
-                            <br /><br />
-                            <label> Image URL (profile photo) </label>
-                            <input type='text' />
-                            <br /><br />
-                            <label> Your Bio </label>
-                            <input type='text' />
-                            <br /><br />
-                            <label> Telephone Number </label>
-                            <input type='text' />
-                            <br /><br />
-                            <label> Email </label>
-                            <input type='email' />
-                            <br /><br />
-                            <label> Your Current Zip Code </label>
-                            <input type='text' />
-                            <br /><br />
-
-                            <input type='submit' />
-                        </form>
+                        <div className='card'>
+                            <form className='container' onSubmit={(e) => this.onSubmit(e)}>
+                                <br />
+                                <label> Username: </label>
+                                <input type='text' />
+                                <br /><br />
+                                <label> Password (5 words) </label>
+                                <input type='password' />
+                                <br /><br />
+                                <label> Image URL (profile photo) </label>
+                                <input type='text' />
+                                <br /><br />
+                                <label> Your Bio </label>
+                                <input type='text' />
+                                <br /><br />
+                                <label> Telephone Number </label>
+                                <input type='text' />
+                                <br /><br />
+                                <label> Email </label>
+                                <input type='email' />
+                                <br /><br />
+                                <label> Your Current Zip Code </label>
+                                <input type='text' />
+                                <br /><br />
+                                
+                                {/* creates a button for account creation */}
+                                <input value='Create Account' type='submit'/>
+                            </form>
+                        </div>
                         : ''
                     }
                     

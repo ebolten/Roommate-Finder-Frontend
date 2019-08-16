@@ -26,6 +26,12 @@ class MenuBar extends React.Component {
         )
     }
 
+    handleMyListings = () => {
+        return (
+            <Link to={`/mylistings/${this.props.user.username}`}> My Listings </Link>
+        )
+    }
+
     render(){
         return(
             <div id='menubar'>
@@ -34,6 +40,7 @@ class MenuBar extends React.Component {
                 <li> {this.props.user !== null ? this.handleHome() : 'Could not Load'} </li>
                 <li> {this.props.user !== null ? this.handleProfile() : 'Could not Load'} </li>
                 <li> {this.props.user !== null ? this.handleLogin() : 'Could not Load'} </li>
+                <li> {this.props.user !== null ? this.handleMyListings() : 'Could not Load'} </li>
             </ul>
             
             </div>

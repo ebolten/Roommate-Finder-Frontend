@@ -12,18 +12,6 @@ class ListingCard extends React.Component {
             bookmarkText:'Bookmark this Listing'
         }
     }
-    //get whether this listing is bookmarked by logged in user
-    getBookmark = () => {
-        fetch('http://localhost:3000/bookmark_listings')
-        .then(resp => resp.json())
-        .then(data => {
-            for (var i = 0; i < data.length; i++) {
-                if ((data[i].user_id === this.props.user.id) && data[i].listing_id === this.props.listing.id) {
-                    this.setState({ isBookmarked:true, bookmarkText:'Delete Bookmark' })
-                }
-            }            
-        })
-    }
 
     //find the user and area that posted the card
     componentDidMount = () => {
@@ -39,6 +27,16 @@ class ListingCard extends React.Component {
                     }
                 }
             }
+            //get whether listing is bookmarked or not
+            fetch('http://localhost:3000/bookmark_listings')
+            .then(resp => resp.json())
+            .then(data => {
+                for (var i = 0; i < data.length; i++) {
+                    if ((data[i].user_id === this.props.user.id) && data[i].listing_id === this.props.listing.id) {
+                        this.setState({ isBookmarked:true, bookmarkText:'Delete Bookmark' })
+                    }
+                }            
+            })
         })
         //find the area of this listing
         fetch('http://localhost:3000/areas')
@@ -74,18 +72,18 @@ class ListingCard extends React.Component {
             <div id='cardObj' className='card'>
 
                 <Image className='container' src={this.props.listing.img_url} alt='room' />
-                <h2 className='container'> Posted By: {this.state.user !== null ? this.state.user.username : 'Unknown User'} </h2>
-                <h4 className='container'> {this.props.listing.desc} </h4>
+                <h3 className='container'> Posted By: {this.state.user !== null ? this.state.user.username : 'Unknown User'} </h3>
+                <h4 className='container'> Price per Month: { this.props.listing.price !== null ? `$${this.props.listing.price}` : 'Contact User for Price' } </h4>
 
-                <h2> Posted in: { this.state.area !== null ? this.state.area.cityname : 'Unknown Location' } </h2>
+                <h3> Posted in: { this.state.area !== null ? this.state.area.cityname : 'Unknown Location' } </h3>
 
                 <button onClick={() => this.state.user !== null ? this.bookmarkListing() : 'null'} > {this.state.bookmarkText} </button>
                 <br />
 
-                { this.props.user !== null && this.props.listing && this.state.isBookmarked === false !== null ? this.getBookmark() : ''}
                 { this.state.isBookmarked !== false ? <div class="bookmark"></div> : <div class="bookmarkEmpty"></div> }
 
                 <button onClick={() => { this.props.setListing(this.props.listing)}} > More Info </button>
+
             </div>
         )
     }

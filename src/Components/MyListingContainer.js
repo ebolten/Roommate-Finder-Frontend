@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card, Icon, Image } from 'semantic-ui-react'
 
-class ListingContainer extends React.Component {
+class MyListingContainer extends React.Component {
 
     constructor(){
         super()

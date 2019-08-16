@@ -72,9 +72,7 @@ class ProfilePage extends React.Component {
                 <h2> {this.props.user !== null ? this.props.user.username : 'Failed to Load User'} </h2>
                 <h3> {this.props.user !== null ? this.props.user.desc : 'Failed to Load User'} </h3>
 
-                {
-                    this.state.createListing !== false ? <NewListingForm user={this.props.user}/> : ''
-                }
+                { this.state.createListing !== false ? <NewListingForm user={this.props.user}/> : '' }
 
                 {/* <NewListingForm user={this.props.user}/> */}
 

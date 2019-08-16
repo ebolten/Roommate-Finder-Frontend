@@ -70,11 +70,9 @@ class IndexPage extends React.Component {
                 <h4> Search Rooms by City: </h4>
                 <SearchBar change={this.changeSearch} />
 
-                <h2> Suggested Rooms: </h2>
-
                 {/* if there are validListings (searched), render those */}
                 { this.state.validListings !== [] ? 
-                    <Listing user={this.props.user} setListing={this.setListing} listings={this.state.validListings}/> : 
+                    <Listing user={this.props.user} setListing={this.setListing} listings={this.state.validListings}/> :
                     ''}
                 
                 {/* if there is a single listing, render the listing container */ }
