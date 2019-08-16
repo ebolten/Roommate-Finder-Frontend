@@ -2,7 +2,7 @@ import React from 'react';
 import Header from './Header.js'
 import MyListingsRender from './MyListingsRender.js'
 import MyListingCard from './MyListingCard.js'
-import ListingContainer from './ListingContainer.js'
+import MyListingContainer from './MyListingContainer.js'
 
 class MyListings extends React.Component {
 
@@ -34,6 +34,10 @@ class MyListings extends React.Component {
         }
     }
 
+    updateListing = (id) => {
+
+    }
+
     render(){
         return(
             <div>
@@ -45,7 +49,12 @@ class MyListings extends React.Component {
                 {/* displaying user's listings */}
                 { this.props.user !== null ? <h1> {this.props.user.username}'s Listings </h1> : ''}
 
-                {/*  */}
+                {/* render a listing show if necessary */}
+                { this.state.listings !== null ? 
+                (this.state.singleListing !== null ? <MyListingContainer setListing={this.setListing} listing={this.state.singleListing} /> : '')
+             : <MyListingContainer setListing={this.setListing} listing={this.state.singleListing} />  }
+            
+
                 { this.state.listings.length !== 0 ? <MyListingsRender setListing={this.setListing} user={this.props.user} listings={this.state.listings} /> : 'Failed to Load' }
 
             </div>

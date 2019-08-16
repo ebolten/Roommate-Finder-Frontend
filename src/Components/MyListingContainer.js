@@ -7,7 +7,8 @@ class MyListingContainer extends React.Component {
         super()
         this.state={
             user:null,
-            area:null
+            area:null,
+            messages:null
         }
     }
     //get the date as a string
@@ -82,7 +83,14 @@ class MyListingContainer extends React.Component {
                 }
             }
         })
+        //get all messages
+        fetch('http://localhost:3000/messages')
+        .then(resp => resp.json())
+        .then(data => {
+            this.setState({ messages:data })
+        })
     }
+
     //send a message to another user about their bookmark
     sendMessage = (event) => {
         event.preventDefault();
@@ -99,6 +107,14 @@ class MyListingContainer extends React.Component {
         .then(data => {
             console.log(data)
         })    
+    }
+    //render specific messages to this user
+    renderMessages = (messages) => {
+        for(var i = 0; i < messages.length; i++){
+            if(messages[i].listing_id === this.props.listing.id){
+                console.log(messages[i])
+            }
+        }
     }
 
     render() {
@@ -122,17 +138,19 @@ class MyListingContainer extends React.Component {
                         <input type='submit'/>
                     
                     </form>
+
+                    <h4> My Messages </h4>
+                    { this.props.listing !== null && this.state.messages !== null ? this.renderMessages(this.state.messages) : 'NULL' }
+
                 
                    <h5 className='container'> Posted On: {this.getDate()} </h5>
 
                     <button onClick={() => { this.props.setListing(null) }}> Back to Listings </button>
 
                 </div>
-
-            
             </div>
         )
     }
 }
 
-export default ListingContainer;
+export default MyListingContainer;
