@@ -178,6 +178,12 @@ li:hover {
   float:right;
 }
 
+.containerAcc {
+  padding: 2px 16px;
+  width:450px;
+  text-align:center;
+}
+
 #loginPage{
   height:700px;
   background-color: white;
@@ -186,4 +192,31 @@ li:hover {
 #loginText{
   font-weight: bold;
   margin:50px;
+}
+
+#LoginComponent{
+  float:right;
+}
+
+#floaat{
+  float:right;
+}
+
+#userProfile{
+  margin:50px;
+  float:left;
+  width:400px;
+}
+
+#profilePhoto{
+  width:250px
+}
+
+#profileBookmarks{
+  float:left;
+  margin:100px;
+}
+
+#floatLeft{
+  float:left;
 }

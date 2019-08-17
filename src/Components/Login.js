@@ -18,7 +18,9 @@ class Login extends React.Component {
             desc:null,
             tel:null,
             email:null,
-            area:null
+            area:null,
+            firstname:null,
+            lastname:null
         }
     }
     //change the state of the username entered to login
@@ -57,6 +59,8 @@ class Login extends React.Component {
             headers:{ 'Content-Type':'application/json' },
             body:JSON.stringify({
                 username:this.state.userName,
+                firstname:this.state.firstname,
+                lastname:this.state.lastname,
                 password_digest:this.state.password,
                 img_url:this.state.img,
                 desc:this.state.desc,
@@ -67,23 +71,39 @@ class Login extends React.Component {
         })
         .then(resp => resp.json())
         .then(data => {
+            if (data.id !== null && data.id !== undefined){
+                window.alert('Account Created!')
+                this.setState({ user:data })
+                this.toggleCreateAcc()
+            } else {
+                if(data.error.username !== undefined){
+                    window.alert(`Failed to Create Account: Username ${data.error.username[0]}`)
+                } else if(data.error.password !== undefined){
+                    window.alert(`Failed to Create Account: Password ${data.error.password[0]}`)
+                } else{
+                    window.alert(`Failed to Create Account`)
+                }
+            }
             console.log(data)
-            this.setState({ user:data })
         })
     }
     //update the state for user attributes on create
     onSubmit = (event) => {
         event.preventDefault()
         let username = event.target.children[2].value
-        let userPassword = event.target.children[6].value
-        let userImg = event.target.children[10].value
-        let userDesc = event.target.children[14].value
-        let userTel = event.target.children[18].value
-        let userEmail = event.target.children[22].value
-        let userArea = event.target.children[26].value
+        let firstName = event.target.children[6].value
+        let lastName = event.target.children[10].value
+        let userPassword = event.target.children[14].value
+        let userImg = event.target.children[18].value
+        let userDesc = event.target.children[22].value
+        let userTel = event.target.children[26].value
+        let userEmail = event.target.children[30].value
+        let userArea = event.target.children[34].value
 
         this.setState({
             userName:username,
+            firstname:firstName,
+            lastname:lastName,
             password:userPassword,
             img:userImg,
             desc:userDesc,
@@ -101,63 +121,81 @@ class Login extends React.Component {
 
     render(){
         return(
-            <div id='loginPage'>
+
+            <div>
                 <PlainHeader />
-                <div id='loginText'>
-                    <br /><br />
-                    <h2>Login:</h2>
-                    
-                    <form onSubmit={ (event) => { this.handleSubmit( event.target.children[1].value ) } } >
-                        <label> Username: </label>
-                        <input type='text' onChange={(e) => { this.userChange( e.target.value ) }} />
-                        <label> Password </label>
-                        <input type='password'/>
+                {
+                this.state.createAcc === false ?
+                <div id='loginPage'>
+                    <div id='loginText'>
+                        <br /><br />
+                        <h2>Login:</h2>
+                        
+                        <form onSubmit={ (event) => { this.handleSubmit( event.target.children[1].value ) } } >
+                            <label> Username: </label>
+                            <input type='text' onChange={(e) => { this.userChange( e.target.value ) }} />
+                            <label> Password </label>
+                            <input type='password'/>
 
-                        {/* creates a button for login */}
-                        { this.state.user !== null ? <Link to={`/profile/${this.state.user.username}`} >
-                            <input value='Login' type='submit'/>
-                        </Link> : <button onClick={(event) => this.popUp(event,'login') }> Login </button>}
+                            {/* creates a button for login */}
+                            { this.state.user !== null ? <Link to={`/profile/${this.state.user.username}`} >
+                                <input value='Login' type='submit'/>
+                            </Link> : <button onClick={(event) => this.popUp(event,'login') }> Login </button>}
+                        </form>
 
-                    </form>
+                        <h1> Or </h1>
 
-                    <h2> Or Create a New Account -> <button onClick={() => this.toggleCreateAcc()} >Here</button></h2>
+                        <h2>Create a New Account -> <button onClick={() => this.toggleCreateAcc()} >Here</button></h2>
 
-                    {/* if user wants to create an account, create a pop-up card */}
-                    { this.state.createAcc !== false ? 
-                        <div className='card'>
-                            <form className='container' onSubmit={(e) => this.onSubmit(e)}>
-                                <br />
-                                <label> Username: </label>
-                                <input type='text' />
-                                <br /><br />
-                                <label> Password (5 words) </label>
-                                <input type='password' />
-                                <br /><br />
-                                <label> Image URL (profile photo) </label>
-                                <input type='text' />
-                                <br /><br />
-                                <label> Your Bio </label>
-                                <input type='text' />
-                                <br /><br />
-                                <label> Telephone Number </label>
-                                <input type='text' />
-                                <br /><br />
-                                <label> Email </label>
-                                <input type='email' />
-                                <br /><br />
-                                <label> Your Current Zip Code </label>
-                                <input type='text' />
-                                <br /><br />
-                                
-                                {/* creates a button for account creation */}
-                                <input value='Create Account' type='submit'/>
-                            </form>
-                        </div>
-                        : ''
-                    }
-                    
+                    </div>
+
                 </div>
 
+                :    
+                
+                <div className='cardListing'>
+                    <form className='containerAcc' onSubmit={(e) => this.onSubmit(e)}>
+                        <br />
+                        <label> Username: </label>
+                        <input type='text' />
+                        <br /><br />
+                        <label> First Name: </label>
+                        <input type='text'/>
+                        <br /><br />
+                        <label> Last Name: </label>
+                        <input type='text'/>
+                        <br /><br />
+                        <label> Password: </label>
+                        <input type='password' />
+                        <br /><br />
+                        <label> Image URL: (profile photo) </label>
+                        <input type='text' />
+                        <br /><br />
+                        <label> Your Bio: </label>
+                        <input type='text' />
+                        <br /><br />
+                        <label> Telephone Number: </label>
+                        <input type='text' />
+                        <br /><br />
+                        <label> Email: </label>
+                        <input type='email' />
+                        <br /><br />
+                        <label> Your Current Zip Code: </label>
+                        <input type='text' />
+                        <br /><br />
+                       
+                        
+                        {/* creates a button for account creation */}
+                        <input value='Create Account' type='submit'/>
+                    </form>
+
+                    <div id='floaat'>
+                        <h2> Back to Login Page </h2>
+                        <button onClick={ () => this.toggleCreateAcc() }>Go Back</button>
+                    </div>
+
+                </div>
+                }
             </div>
         )
     }

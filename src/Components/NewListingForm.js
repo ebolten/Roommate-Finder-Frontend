@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom'
 
 class NewListingForm extends React.Component {
 
@@ -9,7 +10,8 @@ class NewListingForm extends React.Component {
             desc:null,
             preferences:null,
             areaCode:null,
-            price:null
+            price:null,
+            listing:null
         }
     }
 
@@ -29,8 +31,6 @@ class NewListingForm extends React.Component {
 
     //create a post request to create new listing
     postListing = (areaId) => {
-        console.log(this.state.price);
-
         if (areaId === null || areaId === undefined){
             alert('Invalid Zip Code');
         } else{
@@ -48,7 +48,10 @@ class NewListingForm extends React.Component {
                 })
             })
             .then(resp => resp.json())
-            .then(data => {console.log(data)})}
+            .then(data => {
+                console.log(data)
+                this.setState({ listing:data })
+            })}
     }
 
     //handle the submit of the form
@@ -77,7 +80,6 @@ class NewListingForm extends React.Component {
           <h5> Post a New Listing </h5>
           
             <form onSubmit={ event => this.handleSubmit(event) } >
-            
                 <label> Image URL: </label>
                 <textarea type='text'  />
                 <br /><br />
@@ -87,14 +89,22 @@ class NewListingForm extends React.Component {
                 <label> Your Preferences: </label>
                 <textarea type='text'  />
                 <br /><br />
-                <label> Area Code: </label>
+                <label> Zip Code: </label>
                 <input type='text'  />
                 <br /><br />
                 <label> Price per Month: </label>
                 <input type='text' />
-                <input type='submit'/>
-
+                
+                <input value='Post Listing' type='submit'/>
             </form >
+
+            { this.state.listing !== null ? 
+                <Link to={`/mylistings/${this.props.user.username}`} >
+                    <button> See my Listing </button>
+                </Link> 
+                : '' }
+
+
             <br />
           </div>
       )

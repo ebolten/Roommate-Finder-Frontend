@@ -1,5 +1,6 @@
 import React from 'react';
 import { Card, Icon, Image } from 'semantic-ui-react'
+import Messages from './Messages.js'
 
 class MyListingContainer extends React.Component {
 
@@ -108,13 +109,18 @@ class MyListingContainer extends React.Component {
             console.log(data)
         })    
     }
+
     //render specific messages to this user
     renderMessages = (messages) => {
+        let myMessages = []
         for(var i = 0; i < messages.length; i++){
             if(messages[i].listing_id === this.props.listing.id){
-                console.log(messages[i])
+                myMessages.push(messages[i])
             }
         }
+        return (
+            <Messages messages={myMessages} />
+        )
     }
 
     render() {
@@ -140,10 +146,9 @@ class MyListingContainer extends React.Component {
                     </form>
 
                     <h4> My Messages </h4>
-                    { this.props.listing !== null && this.state.messages !== null ? this.renderMessages(this.state.messages) : 'NULL' }
+                    { this.state.messages !== null ? this.renderMessages(this.state.messages) : 'NULL' }
 
-                
-                   <h5 className='container'> Posted On: {this.getDate()} </h5>
+                    <h5 className='container'> Posted On: {this.getDate()} </h5>
 
                     <button onClick={() => { this.props.setListing(null) }}> Back to Listings </button>
 
