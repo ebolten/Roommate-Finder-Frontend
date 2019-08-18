@@ -67,6 +67,9 @@ class IndexPage extends React.Component {
             <div id='indexDiv'>
                 <Header user={this.props.user} btn={'home'} />
 
+                <h2> Suggested Rooms </h2>
+                <br />
+
                 <h4> Search Rooms by City: </h4>
                 <SearchBar change={this.changeSearch} />
 

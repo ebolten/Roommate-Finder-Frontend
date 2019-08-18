@@ -97,7 +97,7 @@ class ProfilePage extends React.Component {
 
                 <div id='profileBookmarks'>
                     
-                        <h2 id='bookmarkText'> My Bookmarks: </h2>
+                        <h2 id='bookmarkText'> Bookmarked Listings: </h2>
 
                         { this.props.id !== null ? this.fetchBookmarks() : 'Failed to Load Bookmarks' }
                         {/* using callback to render single listing if necessary */}
