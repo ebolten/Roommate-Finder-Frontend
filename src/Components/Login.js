@@ -138,14 +138,15 @@ class Login extends React.Component {
                             <input type='password'/>
 
                             {/* creates a button for login */}
-                            { this.state.user !== null ? <Link to={`/profile/${this.state.user.username}`} >
+                            { this.state.user !== null ? 
+                            <Link to={`/profile/${this.state.user.username}`} >
                                 <input value='Login' type='submit'/>
                             </Link> : <button onClick={(event) => this.popUp(event,'login') }> Login </button>}
                         </form>
 
                         <h1> Or </h1>
 
-                        <h2>Create a New Account -> <button onClick={() => this.toggleCreateAcc()} >Here</button></h2>
+                        <h2> Sign Up &#8594; <button id='hereBtn' onClick={() => this.toggleCreateAcc()} >Here</button></h2>
 
                     </div>
 

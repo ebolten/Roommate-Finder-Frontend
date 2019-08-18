@@ -10,6 +10,7 @@ import ProfilePage from './Components/ProfilePage';
 import NewListingForm from './Components/NewListingForm';
 import Login from './Components/Login';
 import MyListings from './Components/MyListings';
+import FirstPage from './Components/FirstPage';
 
 class App extends Component {
 
@@ -60,6 +61,13 @@ class App extends Component {
         <Route path={`/home/`} render={() => {
           return(
             <IndexPage id={this.state.user_id} user={this.state.user} />
+          )
+        }} />
+
+        {/* render first page user sees */}
+        <Route exact path={`/`} render={() => {
+          return(
+            <FirstPage />
           )
         }} />
 

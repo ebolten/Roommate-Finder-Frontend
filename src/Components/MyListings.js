@@ -34,10 +34,6 @@ class MyListings extends React.Component {
         }
     }
 
-    updateListing = (id) => {
-
-    }
-
     render(){
         return(
             <div>

@@ -78,7 +78,7 @@ class ProfilePage extends React.Component {
                     <h2> {this.props.user !== null ? this.props.user.username : 'Failed to Load User'} </h2>
                     <h3> {this.props.user !== null ? `${this.props.user.firstname} ${this.props.user.lastname}`: 'Failed to Load User'} </h3>
 
-                    <h3> {this.props.user !== null ? this.props.user.desc : 'Failed to Load User'} </h3>
+                    <h5> {this.props.user !== null ? this.props.user.desc : 'Failed to Load User'} </h5>
 
                     {/* if button is clicked, user can post a new listing */}
                     { this.state.createListing !== false ? 
@@ -96,15 +96,16 @@ class ProfilePage extends React.Component {
                 </div>
 
                 <div id='profileBookmarks'>
+                    
+                        <h2 id='bookmarkText'> My Bookmarks: </h2>
 
-                <h2 id='floatLeft'> My Bookmarks: </h2>
-                { this.props.id !== null ? this.fetchBookmarks() : 'Failed to Load Bookmarks' }
+                        { this.props.id !== null ? this.fetchBookmarks() : 'Failed to Load Bookmarks' }
+                        {/* using callback to render single listing if necessary */}
+                        { this.state.singleListing !== null ? <ListingContainer setListing={this.setListing} listing={this.state.singleListing} />
+                        : <Listing id='floatLeft' user={this.props.user} setListing={this.setListing} listings={this.state.bookmarks}/>
+                        }
 
-                {/* using callback to render single listing if necessary */}
-
-                { this.state.singleListing !== null ? <ListingContainer setListing={this.setListing} listing={this.state.singleListing} />
-                  : <Listing user={this.props.user} setListing={this.setListing} listings={this.state.bookmarks}/>
-                }
+                        
 
                 </div>
 

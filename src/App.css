@@ -203,20 +203,28 @@ li:hover {
 }
 
 #userProfile{
-  margin:50px;
+  border-style:solid;
+  padding:125px;
+  margin:140px;
   float:left;
-  width:400px;
+  width:500px;
+}
+
+#bookmarkText{
+  margin:50px;
 }
 
 #profilePhoto{
-  width:250px
+  width:300px
 }
 
-#profileBookmarks{
-  float:left;
-  margin:100px;
+#hereBtn{
+  font-weight:bold;
+  width:60px;
+  height:30px;
 }
 
-#floatLeft{
-  float:left;
+#firstPage{
+  margin:25px;
+  margin:center;
 }
