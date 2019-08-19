@@ -94,6 +94,7 @@ class NewListingForm extends React.Component {
                 <br /><br />
                 <label> Price per Month: </label>
                 <input type='text' />
+                <br /><br />
                 
                 <input value='Post Listing' type='submit'/>
             </form >

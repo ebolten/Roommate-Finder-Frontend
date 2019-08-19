@@ -59,7 +59,7 @@ class ListingContainer extends React.Component {
     }
     //find which user posted bookmark
     componentDidMount = () => {
-        fetch('http://localhost:3000/users') //find user
+        fetch('http://localhost:3000//api/v1/users') //find user
         .then(resp => resp.json())
         .then(data => {
             if (this.props.listing.user_id !== undefined){

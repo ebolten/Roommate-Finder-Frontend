@@ -23,14 +23,14 @@ class App extends Component {
     }
   }
 
+  updateCurrentUser = (user) => {
+    this.setState({user:user})
+  }
+
   //parse window.location.pathname to get the username only
   parseUser() {
     let user = window.location.pathname;
-
-    console.log(user)
-
     let NewUser = user.split('/')
-
     if(NewUser[2] === undefined) {
         return null
     } else {
@@ -40,16 +40,30 @@ class App extends Component {
 
   //get users data based on the route
   componentDidMount(){
-    if(this.parseUser() !== null && this.parseUser() != undefined) {
-        fetch(`http://localhost:3000/users/${this.parseUser()}`)
-        .then(resp => resp.json())
-        .then(data => {
-            this.setState({
-                user:data,
-                user_id:data.id
-            })
-        })
+    // if(this.parseUser() !== null && this.parseUser() != undefined) {
+    //     fetch(`http://localhost:3000/users/${this.parseUser()}`)
+    //     .then(resp => resp.json())
+    //     .then(data => {
+    //         this.setState({
+    //             user:data,
+    //             user_id:data.id
+    //         })
+    //     })
+    // }
+
+    //   check to see if there is a jwt?
+    // if there is, fetch to get the user and update the user state
+    let token = localStorage.getItem("jwt")
+    if(token){
+      fetch("http://localhost:3000/api/v1/profile", {
+        headers: {"Authentication": `Bearer ${token}`}
+      })
+      .then(res => res.json())
+      .then(data => {
+      	this.updateCurrentUser(data)
+      })
     }
+    //if not, let them log in
   }
 
   render() {
@@ -79,7 +93,7 @@ class App extends Component {
         }} />
 
         {/* render profile page with a user */}
-        <Route path={`/profile/:username`} render={() => {
+        <Route path={`/profile/`} render={() => {
           return(
             <ProfilePage id={this.state.user_id} user={this.state.user} />
           )
@@ -94,7 +108,7 @@ class App extends Component {
 
         <Route exact path={'/login'} render={() => {
           return(
-            <Login />
+            <Login updateCurrentUser={this.updateCurrentUser} />
           )
         }} />
 

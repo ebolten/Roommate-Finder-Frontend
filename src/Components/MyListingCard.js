@@ -22,7 +22,7 @@ class MyListingCard extends React.Component {
                     img_url: event.target.children[3].value === '' ? event.target.children[3].placeholder : event.target.children[3].value,
                     desc: event.target.children[7].value === '' ? event.target.children[7].placeholder : event.target.children[7].value,
                     preferences: event.target.children[11].value === '' ? event.target.children[11].placeholder : event.target.children[11].value,
-                    user_id: this.props.listing.user_id,
+                    user_id: this.props.listing.user.id,
                     area_id: this.props.listing.area_id,
                     price: event.target.children[15].value === '' ? event.target.children[15].placeholder : event.target.children[15].value
                 })
@@ -72,8 +72,6 @@ class MyListingCard extends React.Component {
                      
                      :
                       ''}
-                
-                
 
             </div>
         )

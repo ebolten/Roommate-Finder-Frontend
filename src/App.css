@@ -198,16 +198,12 @@ li:hover {
   float:right;
 }
 
-#floaat{
-  float:right;
-}
-
 #userProfile{
   border-style:solid;
   padding:125px;
-  margin:140px;
+  margin:125px;
   float:left;
-  width:500px;
+  width:550px;
 }
 
 #bookmarkText{

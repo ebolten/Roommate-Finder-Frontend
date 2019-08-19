@@ -9,6 +9,8 @@ class Login extends React.Component {
     constructor(){
         super()
         this.state={
+            loginUsername:'',
+            loginPassword:'',
             username:null,
             user:null,
             createAcc:false,
@@ -23,6 +25,47 @@ class Login extends React.Component {
             lastname:null
         }
     }
+    //set the state of username
+    handleUsername = (event) => {
+        let value = event.target.value
+        this.setState({ loginUsername: value })
+    }
+    //set the state of pasword
+    handlePassword = (event) => {
+    let value = event.target.value
+    this.setState({ loginPassword: value })
+    }
+    //update the user in App
+    updateCurrentUser = (newUser) => {
+    this.setState({ user:newUser })
+    }
+
+    //user logs in, find the user
+    handleLoginSubmit = (event) => {
+        event.preventDefault()
+        fetch('http://localhost:3000/api/v1/login', {
+            method: "POST",
+            headers: {"Content-Type":"application/json"},
+            body: JSON.stringify({
+                username: this.state.loginUsername,
+                password: this.state.loginPassword
+            })
+        }).then(res => res.json())
+        .then(data => {
+
+            if(data.authenticated){
+            console.log(data)
+            //update state
+            this.props.updateCurrentUser(data.user)
+            //store the token in localStorage
+            localStorage.setItem("jwt", data.token)
+
+            } else{
+            alert("incorrect username or password")
+            }
+        })
+    };
+
     //change the state of the username entered to login
     userChange = (newUsername) => {
         fetch(`http://localhost:3000/users/${newUsername}`)
@@ -131,17 +174,19 @@ class Login extends React.Component {
                         <br /><br />
                         <h2>Login:</h2>
                         
-                        <form onSubmit={ (event) => { this.handleSubmit( event.target.children[1].value ) } } >
+                        <form onSubmit={ (event) => this.handleLoginSubmit(event) } >
                             <label> Username: </label>
-                            <input type='text' onChange={(e) => { this.userChange( e.target.value ) }} />
+                            <input type='text' onChange={(event) => { this.handleUsername(event) }} />
                             <label> Password </label>
-                            <input type='password'/>
+                            <input type='password' onChange={(event) => { this.handlePassword(event) }} />
+
+                            <input value='Login' type='submit'/>
 
                             {/* creates a button for login */}
-                            { this.state.user !== null ? 
-                            <Link to={`/profile/${this.state.user.username}`} >
-                                <input value='Login' type='submit'/>
-                            </Link> : <button onClick={(event) => this.popUp(event,'login') }> Login </button>}
+                            {/* this.state.user !== null ? */}
+                            {/*<Link to={`/profile/${this.state.user.username}`} >*/}
+                                
+                            {/*</Link> : <button onClick={(event) => this.popUp(event,'login') }> Login </button>}*/}
                         </form>
 
                         <h1> Or </h1>
@@ -191,8 +236,7 @@ class Login extends React.Component {
                     </form>
 
                     <div id='floaat'>
-                        <h2> Back to Login Page </h2>
-                        <button onClick={ () => this.toggleCreateAcc() }>Go Back</button>
+                        <button onClick={ () => this.toggleCreateAcc() }>Back to Login</button>
                     </div>
 
                 </div>

@@ -50,7 +50,7 @@ class ProfilePage extends React.Component {
             .then(resp => resp.json())
             .then(data => {
                 for(var i = 0; i < data.length; i++){
-                    if(data[i].user_id === this.props.id){ //render listing objects
+                    if(data[i].user_id === this.props.user.id){ //render listing objects
                         fetch(`http://localhost:3000/listings/${data[i].listing_id}`)
                         .then(resp => resp.json())
                         .then(listData => {
@@ -74,7 +74,6 @@ class ProfilePage extends React.Component {
 
                 {this.props.user !== null ? <img id='profilePhoto' src={this.props.user.img_url} alt='Profile Picture' /> : 'Failed to Load User'}
 
-                    
                     <h2> {this.props.user !== null ? this.props.user.username : 'Failed to Load User'} </h2>
                     <h3> {this.props.user !== null ? `${this.props.user.firstname} ${this.props.user.lastname}`: 'Failed to Load User'} </h3>
 
@@ -99,17 +98,13 @@ class ProfilePage extends React.Component {
                     
                         <h2 id='bookmarkText'> Bookmarked Listings: </h2>
 
-                        { this.props.id !== null ? this.fetchBookmarks() : 'Failed to Load Bookmarks' }
+                        { this.props.user !== null ? this.fetchBookmarks() : 'Failed to Load Bookmarks' }
                         {/* using callback to render single listing if necessary */}
                         { this.state.singleListing !== null ? <ListingContainer setListing={this.setListing} listing={this.state.singleListing} />
                         : <Listing id='floatLeft' user={this.props.user} setListing={this.setListing} listings={this.state.bookmarks}/>
                         }
 
-                        
-
                 </div>
-
-            
 
             </div>
         )
