@@ -11,18 +11,16 @@ class Login extends React.Component {
         this.state={
             loginUsername:'',
             loginPassword:'',
-            username:null,
             user:null,
             createAcc:false,
             userName:null,
+            firstname:null,
+            lastname:null,
             password:null,
             img:null,
             desc:null,
             tel:null,
-            email:null,
-            area:null,
-            firstname:null,
-            lastname:null
+            email:null
         }
     }
     //set the state of username
@@ -52,13 +50,17 @@ class Login extends React.Component {
             })
         }).then(res => res.json())
         .then(data => {
+            console.log(data)
 
             if(data.authenticated){
             console.log(data)
             //update state
+            this.setState({ user:data.user })
             this.props.updateCurrentUser(data.user)
             //store the token in localStorage
             localStorage.setItem("jwt", data.token)
+
+            this.props.history.push(`/profile/${data.user.username}`)
 
             } else{
             alert("incorrect username or password")
@@ -66,14 +68,6 @@ class Login extends React.Component {
         })
     };
 
-    //change the state of the username entered to login
-    userChange = (newUsername) => {
-        fetch(`http://localhost:3000/users/${newUsername}`)
-        .then(resp => resp.json())
-        .then(data => {  
-            this.setState({ user:data, username:newUsername })
-        })
-    }
     //click a button to render create account form
     toggleCreateAcc = () => {
         if(this.state.createAcc === false) {
@@ -84,6 +78,7 @@ class Login extends React.Component {
     }
     //find the area with the area code
     findArea = (area) => {
+
         fetch('http://localhost:3000/areas')
         .then(resp => resp.json())
         .then(data => {
@@ -97,14 +92,15 @@ class Login extends React.Component {
     }
     //post a new user to database
     postUser = (id) => {
-        fetch('http://localhost:3000/users',{
+
+        fetch('http://localhost:3000/api/v1/users',{
             method:'POST',
             headers:{ 'Content-Type':'application/json' },
             body:JSON.stringify({
                 username:this.state.userName,
                 firstname:this.state.firstname,
                 lastname:this.state.lastname,
-                password_digest:this.state.password,
+                password:this.state.password,
                 img_url:this.state.img,
                 desc:this.state.desc,
                 tel_num:this.state.tel,
@@ -114,6 +110,7 @@ class Login extends React.Component {
         })
         .then(resp => resp.json())
         .then(data => {
+           
             if (data.id !== null && data.id !== undefined){
                 window.alert('Account Created!')
                 this.setState({ user:data })
@@ -181,15 +178,11 @@ class Login extends React.Component {
                             <input type='password' onChange={(event) => { this.handlePassword(event) }} />
 
                             <input value='Login' type='submit'/>
-
-                            {/* creates a button for login */}
-                            {/* this.state.user !== null ? */}
-                            {/*<Link to={`/profile/${this.state.user.username}`} >*/}
-                                
-                            {/*</Link> : <button onClick={(event) => this.popUp(event,'login') }> Login </button>}*/}
                         </form>
 
-                        <h1> Or </h1>
+                        <br />
+                        <h1> OR </h1>
+                        <br />
 
                         <h2> Sign Up &#8594; <button id='hereBtn' onClick={() => this.toggleCreateAcc()} >Here</button></h2>
 
@@ -246,4 +239,4 @@ class Login extends React.Component {
     }
 
 }
-export default Login;
+export default withRouter(Login);

@@ -60,9 +60,12 @@ class App extends Component {
       })
       .then(res => res.json())
       .then(data => {
-      	this.updateCurrentUser(data)
+        this.updateCurrentUser(data)
+       
+
       })
     }
+
     //if not, let them log in
   }
 
@@ -122,5 +125,4 @@ class App extends Component {
     );
   }
 }
-
-export default App;
+export default withRouter(App);

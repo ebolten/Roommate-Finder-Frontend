@@ -22,7 +22,9 @@ class MenuBar extends React.Component {
     //send user to login screen
     handleLogin = () => {
         return(
-            <Link to={`/login`}> Logout </Link>
+            <Link onClick={() => { 
+                localStorage.clear()
+             }} to={`/login`}> Logout </Link>
         )
     }
 

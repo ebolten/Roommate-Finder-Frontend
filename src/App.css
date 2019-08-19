@@ -192,6 +192,8 @@ li:hover {
 #loginText{
   font-weight: bold;
   margin:50px;
+  padding:40px;
+  border:solid;
 }
 
 #LoginComponent{
