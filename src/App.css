@@ -162,6 +162,21 @@ li:hover {
   background-color: white;
   padding: 40px;
   margin: 20px auto;
+  position: relative;
+}
+
+.cardListingText{
+  position: absolute;
+  left:1000px;
+  top:350px;
+  border:solid;
+  padding:5px;
+}
+
+.underPhoto{
+  position: absolute;
+  left:680px;
+  top:400px;
 }
 
 .myCardListing {
@@ -264,6 +279,7 @@ li:hover {
 
 #postListing{
   margin:0px auto;
+  position: relative;
 }
 
 #profileBookmarks{
@@ -275,9 +291,16 @@ li:hover {
 }
 
 #hereBtn{
+  width:200px;
+  height:50px;
   font-weight:bold;
-  width:60px;
-  height:30px;
+  font-size: 20px;
+  border-radius: 5%;
+  border:solid black;
+}
+
+.formLabel{
+  font-weight:bold;
 }
 
 #firstPage{
@@ -301,11 +324,28 @@ li:hover {
 }
 
 #message{
-  font-size:15px;
+  font-size:13px;
   margin:0px auto;
+  font-weight: 2px;
 }
 
 #userMessage{
   /* try to render a message sent by a certain user */
   /* with a different color */
+}
+
+#newListingProfile{
+  width:300px;
+  position: absolute;
+  left:500px;
+  top:-200px;
+}
+
+#formBtn{
+  width:200px;
+  height:50px;
+  font-weight:bold;
+  font-size: 20px;
+  border-radius: 5%;
+  border:solid black;
 }

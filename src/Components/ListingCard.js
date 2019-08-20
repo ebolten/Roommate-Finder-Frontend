@@ -103,7 +103,6 @@ class ListingCard extends React.Component {
                     <button onClick={() => this.state.user !== null ? this.unbookmarkListing() : 'null'} > {this.state.bookmarkText} </button>
                 }
 
-               
                 { this.state.isBookmarked !== false ? <div class="bookmark"></div> : <div class="bookmarkEmpty"></div> }
 
                 <button onClick={() => { this.props.setListing(this.props.listing)}} > More Info </button>

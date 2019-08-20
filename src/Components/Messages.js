@@ -27,7 +27,9 @@ class Messages extends React.Component {
     render(){
         return(
             <div id='message'>
-                { this.props.message !== null ? this.props.message.content : ''}
+                < hr />
+                <p>{ this.props.message !== null ? this.props.message.content : ''}{ this.state.user !== null ? ` - ${this.state.user.username}` : ''}</p>
+                < hr />
             </div>
         )
     }

@@ -16,7 +16,7 @@ class ListingContainer extends React.Component {
     renderMessages = (messages) => {
         for(var i = 0; i < messages.length; i++){
             if(messages[i].listing_id === this.props.listing.id){
-                this.setState({ myMessages:[...this.state.myMessages,messages] })
+                this.setState({ myMessages:[...this.state.myMessages,messages[i]] })
             }
         }
     }
@@ -108,7 +108,7 @@ class ListingContainer extends React.Component {
             headers:{ 'Content-Type':'application/json' },
             body:JSON.stringify({
                 listing_id: this.props.listing.id,
-                user_id: this.state.user.id,
+                user_id: this.props.user.id,
                 content:event.target.children[0].value
             })
         })
@@ -131,30 +131,31 @@ class ListingContainer extends React.Component {
                    <h4 className='containerText'> Room Description: {this.props.listing.desc} </h4>
                    <h4 className='containerText'> Preferences: { this.props.listing.preferences } </h4>
 
-                    {/* <div id='messages'>
+                     {/* display messages for this listing */}
+                     <div id='messages'>
                         <h3> Messages </h3>
 
                         { this.state.myMessages.map(m => {
                             return <Messages listing={this.props.listing} message={m} />
                         })}
-                    </div> */}
+                        {/* form to send message */}
+                        <form onSubmit={(event) => { this.sendMessage(event) }}>
+                            <textarea type='text' />
+                            <input value='send' type='submit'/>
+                        </form>
+                    </div>
+                    {/* display contact info for user */}
+                    <div className='cardListingText'>
+                        <h5> Contact {this.state.user !== null ? this.state.user.username : 'Unknown User'}: </h5>
+                        <h5> Phone Number: {this.state.user !== null ? this.state.user.tel_num : ''} </h5>
 
-
-                    <form onSubmit={(event) => { this.sendMessage(event) }}>
-                        <textarea type='text' />
-                        <input value='send' type='submit'/>
-                    </form>
-
-
-                    <h5 className='containerText'> Contact {this.state.user !== null ? this.state.user.username : 'Unknown User'}: </h5>
-                    <h5 className='containerText'> Phone Number: {this.state.user !== null ? this.state.user.tel_num : ''} </h5>
-
-                    <h5 className='containerText'> Email: {this.state.user !== null ? this.state.user.email : ''} </h5>
-                    
-                   <h5 className='container'> Posted On: {this.getDate()} </h5>
-
-                    <button onClick={() => { this.props.setListing(null) }}> Back to Listings </button>
-
+                        <h5> Email: {this.state.user !== null ? this.state.user.email : ''} </h5>
+                    </div>
+                    {/* display when posted and back to listings btn */}
+                    <div className='underPhoto'>
+                        <h5> Posted On: {this.getDate()} </h5>
+                        <button onClick={() => { this.props.setListing(null) }}> Back to Listings </button>
+                    </div>
                 </div>
             </div>
         )

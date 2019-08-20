@@ -169,15 +169,16 @@ class Login extends React.Component {
                 <div id='loginPage'>
                     <div id='loginText'>
                         <br /><br />
-                        <h2>Login:</h2>
+                        <h1>Login:</h1>
+                        <br />
                         
                         <form onSubmit={ (event) => this.handleLoginSubmit(event) } >
-                            <label> Username: </label>
-                            <input type='text' onChange={(event) => { this.handleUsername(event) }} />
-                            <label> Password </label>
-                            <input type='password' onChange={(event) => { this.handlePassword(event) }} />
+                            <label className='formLabel'> Username: </label>
+                            <input className='formInput' type='text' onChange={(event) => { this.handleUsername(event) }} />
+                            <label className='formLabel'> Password </label>
+                            <input className='formInput' type='password' onChange={(event) => { this.handlePassword(event) }} />
 
-                            <input value='Login' type='submit'/>
+                            <input className='submitButton' value='Login' type='submit'/>
                         </form>
 
                         <br />

@@ -86,10 +86,10 @@ class ProfilePage extends React.Component {
                         <div id='postListing'>
                         {/* if button is clicked, user can post a new listing */}
                         { this.state.createListing !== false ? 
-                            <div>
+                            <div id='newListingProfile'>
                                 <NewListingForm user={this.props.user}/>
                             </div> : 
-                            <div>
+                            <div id='newListingProfile'>
                                 <button id='formBtn'
                                 onClick={() => {this.state.createListing === false ? this.setState({ createListing:true }) : this.setState({ createListing:false })}} >
                                     {this.state.btnText}
@@ -106,10 +106,10 @@ class ProfilePage extends React.Component {
 
                         { this.props.user !== null ? this.fetchBookmarks() : 'Failed to Load Bookmarks' }
                         {/* using callback to render single listing if necessary */}
-                        { this.state.singleListing !== null ? <ListingContainer setListing={this.setListing} listing={this.state.singleListing} />
+                        { this.state.singleListing !== null ? <ListingContainer user={this.props.user} setListing={this.setListing} listing={this.state.singleListing} />
                         : <Listing id='floatLeft' user={this.props.user} setListing={this.setListing} listings={this.state.bookmarks}/>
                         }
-
+                        { this.state.bookmarks.length === 0 ? 'No Bookmarks Yet.' : ''}
                 </div>
 
             </div>
