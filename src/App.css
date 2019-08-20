@@ -34,21 +34,25 @@
 
 /* ROOMMATE APP COMPONENTS */
 
+
+
 #headerComponent{
   height:150px;
   background-color: olivedrab;
   padding:10px;
   text-align:left;
+  position:relative;;  
 }
 
 #listingsComponent{
   display:flex;
   flex-flow:row wrap;
-  margin:75px;
+  margin: 0px auto;
+  text-align:center;
 }
 
 #cardObj{
-  margin:30px;
+  margin: 50px auto;
 }
 
 #roomTitle{
@@ -157,6 +161,28 @@ li:hover {
   transition: 0.3s;
   background-color: white;
   padding: 40px;
+  margin: 20px auto;
+}
+
+.myCardListing {
+  /* Add shadows to create the "card" effect */
+  margin:50px;
+  margin-left: left;
+  margin-right: auto;
+  width: 1300px;
+  height: 500px;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+  background-color: white;
+  padding: 40px;
+  margin: 20px auto;
+}
+
+.myContainerText {
+  padding: 2px 16px;
+  width:400px;
+  float:right;
+  height:20px;
 }
 
 /* On mouse-over, add a deeper shadow */
@@ -174,8 +200,9 @@ li:hover {
 
 .containerText {
   padding: 2px 16px;
-  width:450px;
+  width:350px;
   float:right;
+  height:20px;
 }
 
 .containerAcc {
@@ -190,30 +217,61 @@ li:hover {
 }
 
 #loginText{
-  font-weight: bold;
+  /* Add shadows to create the "card" effect */
   margin:50px;
-  padding:40px;
-  border:solid;
+  margin-left: left;
+  margin-right: auto;
+  width: 1300px;
+  height: 450px;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+  background-color: white;
+  padding: 20px;
+  margin: 20px auto;
 }
 
 #LoginComponent{
   float:right;
+  margin: 20px auto;
 }
 
-#userProfile{
-  border-style:solid;
-  padding:125px;
-  margin:125px;
+#userProfile {
+  /* Add shadows to create the "card" effect */
+  margin:50px;
+  margin-left: left;
+  margin-right: auto;
+  width: 1300px;
+  height: 500px;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+  background-color: white;
+  padding: 20px;
+  margin: 20px auto;
+}
+
+#profileText{
   float:left;
-  width:550px;
+  width:200px;
+}
+
+#profilePhoto{
+  width:380px;
+  position: relative;
+  padding:20px;
+  margin: 0px auto;
+  float:left;
+}
+
+#postListing{
+  margin:0px auto;
+}
+
+#profileBookmarks{
+  margin: 20px auto;
 }
 
 #bookmarkText{
   margin:50px;
-}
-
-#profilePhoto{
-  width:300px
 }
 
 #hereBtn{
@@ -225,4 +283,29 @@ li:hover {
 #firstPage{
   margin:25px;
   margin:center;
+}
+
+#bedLogo{
+  top: 0;
+  right:60px;
+  position:absolute;  
+  padding:20px
+}
+
+#messages{
+  height:350px;
+  width:200px;
+  border:1px solid #ccc;
+  margin: 0px auto;
+  overflow:scroll;
+}
+
+#message{
+  font-size:15px;
+  margin:0px auto;
+}
+
+#userMessage{
+  /* try to render a message sent by a certain user */
+  /* with a different color */
 }

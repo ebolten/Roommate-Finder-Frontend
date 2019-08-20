@@ -34,8 +34,7 @@ class IndexPage extends React.Component {
         }
         //if word is empty, valid listings is empty
         if (searchWord.length === 0){
-            this.setState({ validListings:[] })
-            
+            this.setState({ validListings:[] }) 
         }
     }
     //getting the listings
@@ -68,6 +67,7 @@ class IndexPage extends React.Component {
                 <Header user={this.props.user} btn={'home'} />
 
                 <h2> Suggested Rooms </h2>
+
                 <br />
 
                 <h4> Search Rooms by City: </h4>

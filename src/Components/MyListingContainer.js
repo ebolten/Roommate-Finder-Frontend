@@ -9,7 +9,7 @@ class MyListingContainer extends React.Component {
         this.state={
             user:null,
             area:null,
-            messages:null
+            myMessages:[]
         }
     }
     //get the date as a string
@@ -88,10 +88,9 @@ class MyListingContainer extends React.Component {
         fetch('http://localhost:3000/messages')
         .then(resp => resp.json())
         .then(data => {
-            this.setState({ messages:data })
+            this.renderMessages(data)
         })
     }
-
     //send a message to another user about their bookmark
     sendMessage = (event) => {
         event.preventDefault();
@@ -101,7 +100,7 @@ class MyListingContainer extends React.Component {
             body:JSON.stringify({
                 listing_id: this.props.listing.id,
                 user_id: this.state.user.id,
-                content:event.target.children[1].value
+                content:event.target.children[0].value
             })
         })
         .then(resp => resp.json())
@@ -109,49 +108,44 @@ class MyListingContainer extends React.Component {
             console.log(data)
         })    
     }
-
     //render specific messages to this user
     renderMessages = (messages) => {
-        let myMessages = []
         for(var i = 0; i < messages.length; i++){
             if(messages[i].listing_id === this.props.listing.id){
-                myMessages.push(messages[i])
+                this.setState({ myMessages:[...this.state.myMessages,messages[i]] })
             }
         }
-        return (
-            <Messages messages={myMessages} />
-        )
     }
-
     render() {
         return(
             <div>
             
-                <div className='cardListing'>
+                <div className='myCardListing'>
 
                    <Image className='containerImage' src={this.props.listing.img_url} /> 
 
-                   <h3 className='containerText'> Price per Month: { this.props.listing.price !== null ? `$${this.props.listing.price}` : 'Message User for Price'} </h3>
-                   <h3 className='containerText'>Posted By: {this.state.user !== null ? this.state.user.username : 'Unknown User'} </h3>
-                   <h3 className='containerText'> Posted In: {this.state.area !== null ? `${this.state.area.cityname}, ${this.state.area.zipcode}` : 'Unknown Area'} </h3>
-                   <h3 className='containerText'> Room Description: {this.props.listing.desc} </h3>
+                   <h3 className='myContainerText'> Price per Month: { this.props.listing.price !== null ? `$${this.props.listing.price}` : 'Message User for Price'} </h3>
+                   <h3 className='myContainerText'>Posted By: {this.state.user !== null ? this.state.user.username : 'Unknown User'} </h3>
+                   <h3 className='myContainerText'> Posted In: {this.state.area !== null ? `${this.state.area.cityname}, ${this.state.area.zipcode}` : 'Unknown Area'} </h3>
+                   <h3 className='myContainerText'> Room Description: {this.props.listing.desc} </h3>
 
-                   <form className='containerText' onSubmit={(event) => { this.sendMessage(event) }}>
-                    
-                        <label> Enter Message Here: </label>
-                        <textarea type='text' />
+                   <div id='messages'>
+                        <h3> My Messages </h3>
 
-                        <input type='submit'/>
-                    
-                    </form>
+                        { this.state.myMessages.map(m => {
+                            return <Messages listing={this.props.listing} message={m} />
+                        })}
 
-                    <h4> My Messages </h4>
-                    { this.state.messages !== null ? this.renderMessages(this.state.messages) : 'NULL' }
+                        <br /><br />
+                        
+                        <form  onSubmit={(event) => { this.sendMessage(event) }}>
+                            <textarea type='text' />
+                            <input value='send' type='submit'/>
+                        </form>
+                    </div>
 
                     <h5 className='container'> Posted On: {this.getDate()} </h5>
-
                     <button onClick={() => { this.props.setListing(null) }}> Back to Listings </button>
-
                 </div>
             </div>
         )

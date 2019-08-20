@@ -1,5 +1,6 @@
 import React from 'react';
 import { Card, Icon, Image } from 'semantic-ui-react'
+import Messages from './Messages.js'
 
 class ListingContainer extends React.Component {
 
@@ -7,7 +8,16 @@ class ListingContainer extends React.Component {
         super()
         this.state={
             user:null,
-            area:null
+            area:null,
+            myMessages:[]
+        }
+    }
+    //render specific messages to this listing
+    renderMessages = (messages) => {
+        for(var i = 0; i < messages.length; i++){
+            if(messages[i].listing_id === this.props.listing.id){
+                this.setState({ myMessages:[...this.state.myMessages,messages] })
+            }
         }
     }
     //get the date as a string
@@ -59,7 +69,8 @@ class ListingContainer extends React.Component {
     }
     //find which user posted bookmark
     componentDidMount = () => {
-        fetch('http://localhost:3000//api/v1/users') //find user
+        //find user who posted listing
+        fetch('http://localhost:3000/api/v1/users')
         .then(resp => resp.json())
         .then(data => {
             if (this.props.listing.user_id !== undefined){
@@ -71,6 +82,12 @@ class ListingContainer extends React.Component {
                     }
                 }
             }
+        })
+        //render the messages of this listing
+        fetch('http://localhost:3000/messages')
+        .then(resp => resp.json())
+        .then(data => {
+            this.renderMessages(data)
         })
         //find area of the bookmark
         fetch('http://localhost:3000/areas')
@@ -92,7 +109,7 @@ class ListingContainer extends React.Component {
             body:JSON.stringify({
                 listing_id: this.props.listing.id,
                 user_id: this.state.user.id,
-                content:event.target.children[1].value
+                content:event.target.children[0].value
             })
         })
         .then(resp => resp.json())
@@ -104,7 +121,6 @@ class ListingContainer extends React.Component {
     render() {
         return(
             <div>
-            
                 <div className='cardListing'>
 
                    <Image className='containerImage' src={this.props.listing.img_url} /> 
@@ -112,24 +128,34 @@ class ListingContainer extends React.Component {
                    <h3 className='containerText'> Price per Month: { this.props.listing.price !== null ? `$${this.props.listing.price}` : 'Message User for Price'} </h3>
                    <h3 className='containerText'>Posted By: {this.state.user !== null ? this.state.user.username : 'Unknown User'} </h3>
                    <h3 className='containerText'> Posted In: {this.state.area !== null ? `${this.state.area.cityname}, ${this.state.area.zipcode}` : 'Unknown Area'} </h3>
-                   <h3 className='containerText'> Room Description: {this.props.listing.desc} </h3>
+                   <h4 className='containerText'> Room Description: {this.props.listing.desc} </h4>
+                   <h4 className='containerText'> Preferences: { this.props.listing.preferences } </h4>
 
-                   <form className='containerText' onSubmit={(event) => { this.sendMessage(event) }}>
-                    
-                        <label> Enter Message Here: </label>
+                    {/* <div id='messages'>
+                        <h3> Messages </h3>
+
+                        { this.state.myMessages.map(m => {
+                            return <Messages listing={this.props.listing} message={m} />
+                        })}
+                    </div> */}
+
+
+                    <form onSubmit={(event) => { this.sendMessage(event) }}>
                         <textarea type='text' />
-
-                        <input type='submit'/>
-                    
+                        <input value='send' type='submit'/>
                     </form>
-                
+
+
+                    <h5 className='containerText'> Contact {this.state.user !== null ? this.state.user.username : 'Unknown User'}: </h5>
+                    <h5 className='containerText'> Phone Number: {this.state.user !== null ? this.state.user.tel_num : ''} </h5>
+
+                    <h5 className='containerText'> Email: {this.state.user !== null ? this.state.user.email : ''} </h5>
+                    
                    <h5 className='container'> Posted On: {this.getDate()} </h5>
 
                     <button onClick={() => { this.props.setListing(null) }}> Back to Listings </button>
 
                 </div>
-
-            
             </div>
         )
     }

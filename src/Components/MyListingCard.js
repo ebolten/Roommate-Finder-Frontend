@@ -5,15 +5,24 @@ class MyListingCard extends React.Component {
 
     constructor(){
         super()
-        this.state={ updateListing:false }
+        this.state={ updateListing:false,area:null }
     }
 
     toggleUpdate = () => {
         this.setState({updateListing:true })
     }
+    //find the area this listing was posted in
+    findArea = () => {
+        let code = this.props.listing.area_id
+
+        fetch(`http://localhost:3000/areas/${code}`)
+        .then(resp => resp.json())
+        .then(data => {
+            this.setState({ area:data })
+        })
+    }
 
     updateListing = (event) => {
-
         fetch(`http://localhost:3000/listings/${this.props.listing.id}`,{
                 method:'PATCH',
                 headers:{'Content-Type':'application/json',
@@ -22,7 +31,7 @@ class MyListingCard extends React.Component {
                     img_url: event.target.children[3].value === '' ? event.target.children[3].placeholder : event.target.children[3].value,
                     desc: event.target.children[7].value === '' ? event.target.children[7].placeholder : event.target.children[7].value,
                     preferences: event.target.children[11].value === '' ? event.target.children[11].placeholder : event.target.children[11].value,
-                    user_id: this.props.listing.user.id,
+                    user_id: this.props.listing.user_id,
                     area_id: this.props.listing.area_id,
                     price: event.target.children[15].value === '' ? event.target.children[15].placeholder : event.target.children[15].value
                 })
@@ -38,8 +47,12 @@ class MyListingCard extends React.Component {
             <div id='cardObj' className='card'>
 
                 <Image className='container' src={this.props.listing.img_url} alt='room' />
-                <h3 className='container'> Posted By: {this.props.user !== null ? this.props.user.username : 'Unknown User'} </h3>
-                <h4 className='container'> Price per Month: { this.props.listing.price !== null ? `$${this.props.listing.price}` : 'No Listed Price' } </h4>
+
+                {/* find the area if necessary */}
+                { this.props.listing !== null && this.state.area === null ? this.findArea() : ''}
+                <h4> Posted In: { this.state.area !== null ? this.state.area.cityname : ''}</h4>
+
+                <h4 className='container'> Listed Price per Month: { this.props.listing.price !== null ? `$${this.props.listing.price}` : 'No Listed Price' } </h4>
 
                 <button onClick={() => { this.props.setListing(this.props.listing)}} > More Info </button>
 

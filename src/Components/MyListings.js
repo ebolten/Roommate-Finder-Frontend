@@ -51,7 +51,7 @@ class MyListings extends React.Component {
              : <MyListingContainer setListing={this.setListing} listing={this.state.singleListing} />  }
             
 
-                { this.state.listings.length !== 0 ? <MyListingsRender setListing={this.setListing} user={this.props.user} listings={this.state.listings} /> : 'Failed to Load' }
+                { this.state.listings.length !== 0 ? <MyListingsRender setListing={this.setListing} user={this.props.user} listings={this.state.listings} /> : 'No Listings.' }
 
             </div>
         )

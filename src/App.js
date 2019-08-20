@@ -61,8 +61,6 @@ class App extends Component {
       .then(res => res.json())
       .then(data => {
         this.updateCurrentUser(data)
-       
-
       })
     }
 
