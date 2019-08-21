@@ -72,7 +72,7 @@
   /* Add shadows to create the "card" effect */
   margin-left: left;
   margin-right: auto;
-  width: 520px;
+  width: 420px;
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
   transition: 0.3s;
   background-color: white;
@@ -87,7 +87,12 @@
 /* Add some padding inside the card container */
 .container {
   padding: 2px 16px;
-  width:450px;
+  width:350px;
+}
+
+#cardImg{
+  width:350px;
+  height:300px;
 }
 
 /* LIST FOR MENU BAR */
@@ -217,7 +222,7 @@ li:hover {
   padding: 2px 16px;
   width:350px;
   float:right;
-  height:20px;
+  height:35px;
 }
 
 .containerAcc {
@@ -271,6 +276,7 @@ li:hover {
 
 #profilePhoto{
   width:380px;
+  height:275px;
   position: relative;
   padding:20px;
   margin: 0px auto;
@@ -315,18 +321,28 @@ li:hover {
   padding:20px
 }
 
+#sendMessage{
+  position: relative; bottom:0;
+}
+
 #messages{
   height:350px;
   width:200px;
   border:1px solid #ccc;
   margin: 0px auto;
   overflow:scroll;
+  position: relative;
+  bottom:2;
+  text-align:left;
 }
 
 #message{
   font-size:13px;
-  margin:0px auto;
+  margin:2px auto;
+  padding:2px;
   font-weight: 2px;
+  position: relative;
+  bottom:0;
 }
 
 #userMessage{
@@ -348,4 +364,28 @@ li:hover {
   font-size: 20px;
   border-radius: 5%;
   border:solid black;
+}
+
+#editFormBtn{
+  position:absolute;
+  right:1075px;
+  top:525px;
+  width:200px;
+  height:50px;
+  font-weight:bold;
+  font-size: 20px;
+  border-radius: 5%;
+  border:solid black;
+}
+
+#delListingBtn{
+  position:absolute;
+  right:250px;
+  top:725px;
+}
+
+#editProfileForm{
+  position:absolute;
+  right:980px;
+  top:500px;
 }

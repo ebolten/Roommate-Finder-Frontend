@@ -46,7 +46,7 @@ class MyListingCard extends React.Component {
         return(
             <div id='cardObj' className='card'>
 
-                <Image className='container' src={this.props.listing.img_url} alt='room' />
+                <Image id='cardImg' className='container' src={this.props.listing.img_url} alt='room' />
 
                 {/* find the area if necessary */}
                 { this.props.listing !== null && this.state.area === null ? this.findArea() : ''}

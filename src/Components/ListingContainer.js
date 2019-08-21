@@ -103,19 +103,24 @@ class ListingContainer extends React.Component {
     //send a message to another user about their bookmark
     sendMessage = (event) => {
         event.preventDefault();
+        let newContent = event.target.children[0].value;
+        event.target.children[0].value = '';
+
         fetch('http://localhost:3000/messages',{
             method:'POST',
             headers:{ 'Content-Type':'application/json' },
             body:JSON.stringify({
                 listing_id: this.props.listing.id,
                 user_id: this.props.user.id,
-                content:event.target.children[0].value
+                content:newContent
             })
         })
         .then(resp => resp.json())
         .then(data => {
             console.log(data)
-        })    
+            this.setState({ myMessages:[...this.state.myMessages,data]})
+        })
+        event.target.children[1].value = '';
     }
 
     render() {
@@ -125,9 +130,8 @@ class ListingContainer extends React.Component {
 
                    <Image className='containerImage' src={this.props.listing.img_url} /> 
 
-                   <h3 className='containerText'> Price per Month: { this.props.listing.price !== null ? `$${this.props.listing.price}` : 'Message User for Price'} </h3>
-                   <h3 className='containerText'>Posted By: {this.state.user !== null ? this.state.user.username : 'Unknown User'} </h3>
-                   <h3 className='containerText'> Posted In: {this.state.area !== null ? `${this.state.area.cityname}, ${this.state.area.zipcode}` : 'Unknown Area'} </h3>
+                   <h2 className='containerText'> Price per Month: ${this.props.listing.price} </h2>
+                   <h2 className='containerText'> Posted In: {this.state.area !== null ? `${this.state.area.cityname}, ${this.state.area.zipcode}` : 'Unknown Area'} </h2>
                    <h4 className='containerText'> Room Description: {this.props.listing.desc} </h4>
                    <h4 className='containerText'> Preferences: { this.props.listing.preferences } </h4>
 
@@ -139,7 +143,7 @@ class ListingContainer extends React.Component {
                             return <Messages listing={this.props.listing} message={m} />
                         })}
                         {/* form to send message */}
-                        <form onSubmit={(event) => { this.sendMessage(event) }}>
+                        <form id='sendMessage' onSubmit={(event) => { this.sendMessage(event) }}>
                             <textarea type='text' />
                             <input value='send' type='submit'/>
                         </form>

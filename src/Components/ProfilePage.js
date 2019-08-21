@@ -2,6 +2,7 @@ import React from 'react'
 import Header from './Header.js'
 import Listing from './Listings.js'
 import NewListingForm from './NewListingForm.js'
+import EditProfileForm from './EditProfileForm.js'
 import ListingContainer from './ListingContainer.js'
 
 class ProfilePage extends React.Component {
@@ -10,6 +11,7 @@ class ProfilePage extends React.Component {
         super()
         this.state={
             createListing:false,
+            editProfile:false,
             bookmarks:[],
             user:null,
             listings:[],
@@ -98,6 +100,20 @@ class ProfilePage extends React.Component {
                         }
                         </div>
                     </div>
+
+                    
+                    {/* if user wants to render a form, use the button */}
+                    { this.state.editProfile !== false ?
+                        <div id='editProfileForm' >
+                            <EditProfileForm user={this.props.user} />
+                        </div>
+                        :
+                        <button onClick={() => this.state.editProfile === false ? 
+                            this.setState({ editProfile:true }) : 
+                            this.setState({ editProfile:false })} id='editFormBtn'> Edit Profile </button>
+                    }
+
+
 
                 </div>
                 <div id='profileBookmarks'>

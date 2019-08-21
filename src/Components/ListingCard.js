@@ -91,7 +91,7 @@ class ListingCard extends React.Component {
         return(
             <div id='cardObj' className='card'>
 
-                <Image className='container' src={this.props.listing.img_url} alt='room' />
+                <Image id='cardImg' className='container' src={this.props.listing.img_url} alt='room' />
                 <h3 className='container'> Posted By: {this.state.user !== null ? this.state.user.username : 'Unknown User'} </h3>
                 <h4 className='container'> Price per Month: { this.props.listing.price !== null ? `$${this.props.listing.price}` : 'Contact User for Price' } </h4>
 

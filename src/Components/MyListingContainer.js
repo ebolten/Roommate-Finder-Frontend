@@ -1,6 +1,7 @@
 import React from 'react';
 import { Card, Icon, Image } from 'semantic-ui-react'
 import Messages from './Messages.js'
+import { Link } from 'react-router-dom'
 
 class MyListingContainer extends React.Component {
 
@@ -94,19 +95,23 @@ class MyListingContainer extends React.Component {
     //send a message to another user about their bookmark
     sendMessage = (event) => {
         event.preventDefault();
+        let newContent = event.target.children[0].value;
+        event.target.children[0].value = '';
+
         fetch('http://localhost:3000/messages',{
             method:'POST',
             headers:{ 'Content-Type':'application/json' },
             body:JSON.stringify({
                 listing_id: this.props.listing.id,
                 user_id: this.state.user.id,
-                content:event.target.children[0].value
+                content:newContent
             })
         })
         .then(resp => resp.json())
         .then(data => {
             console.log(data)
-        })    
+            this.setState({ myMessages:[...this.state.myMessages,data]})
+        }) 
     }
     //render specific messages to this user
     renderMessages = (messages) => {
@@ -116,6 +121,48 @@ class MyListingContainer extends React.Component {
             }
         }
     }
+    //delete your own listing
+    deleteListing = () => {
+        if(window.confirm('Delete this Listing?')){
+            fetch(`http://localhost:3000/listings/${this.props.listing.id}`,{
+                method:'DELETE',
+                headers:{'Content-Type':'application/json'},
+                body:JSON.stringify({
+                    id:this.props.listing.id
+                })
+            })
+            .then(resp => resp.json())
+            .then(del => {
+            })
+            fetch('http://localhost:3000/bookmark_listings')
+            .then(resp => resp.json())
+            .then(data => {
+                //if there is a bookmark listing with that ID, delete it
+                for(var i = 0; i < data.length; i++){
+
+                    console.log(`Listing: ${this.props.listing.id}`)
+                    console.log(`Data: ${data[i].listing_id}`)
+
+                    if(data[i].listing_id === this.props.listing.id){
+                        fetch(`http://localhost:3000/bookmark_listings/${data[i].id}`,{
+                            method:'DELETE',
+                            headers:{'Content-Type':'application/json'},
+                            body:JSON.stringify({
+                                id:data[i].id
+                            })
+                        })
+                        .then(resp => resp.json())
+                        .then(data => {
+                            console.log(data)
+                        })
+                    }
+                }
+            })
+        } else {
+            //don't delete the listing
+        }        
+    }
+
     render() {
         return(
             <div>
@@ -137,13 +184,21 @@ class MyListingContainer extends React.Component {
                         })}
 
                         <br /><br />
-                        
-                        <form  onSubmit={(event) => { this.sendMessage(event) }}>
+
+                        <form id='sendMessage' onSubmit={(event) => { this.sendMessage(event) }}>
                             <textarea type='text' />
                             <input value='send' type='submit'/>
                         </form>
                     </div>
 
+                    { this.state.user !== null ? 
+                        <Link to={`/profile/${this.state.user.id}`}>
+                            <button id='delListingBtn' onClick={() => this.deleteListing()}> Delete Listing </button>    
+                        </Link>
+                    : ''}
+
+                    
+                    
                     <h5 className='container'> Posted On: {this.getDate()} </h5>
                     <button onClick={() => { this.props.setListing(null) }}> Back to Listings </button>
                 </div>
